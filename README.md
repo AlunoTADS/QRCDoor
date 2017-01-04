@@ -5,4 +5,6 @@ Descrição:
 
 Objetivo Geral:
   Desenvolver um sistema inteligente de controle de acesso de uma porta, implementando recursos de Visão Computacional, utilizando WebCam e dispositivo móvel;  aplicando-o na área de segurança e gestão de informação.
+  
+  Mais em: http://gepta.weebly.com/qrc-door.html
 
