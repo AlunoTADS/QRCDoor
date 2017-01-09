@@ -19,10 +19,10 @@ Ideias:
 -Gerente geral. //gerencia tudo mas não abre tudo.
 -Várias chaves(especialização: impressão digital, número, qr code, etc)
 -Portal para o usuário solicitar acesso.
+-Sistema de Cartão Ponto.
 
 23/01 - AS IDEIAS DEVEM ESTAR MADURAS E O ESCOPO DEVE SER DEFINIDO
 
 06/07 - O TCC DEVE ESTAR RODANDO
 
 PEDIR DOCUMENTO MODELO PARA PEDRO
-
