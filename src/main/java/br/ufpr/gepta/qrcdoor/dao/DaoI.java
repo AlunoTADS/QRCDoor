@@ -5,22 +5,20 @@
  */
 package br.ufpr.gepta.qrcdoor.dao;
 
+import br.ufpr.gepta.qrcdoor.model.Model;
 import java.util.List;
 
 /**
  *
  * @author mklos
  */
-public interface DaoI<T> {
-    
-        public void inserir(T t) throws Exception;
-    
-    public void editar(T t) throws Exception;
-    
-    public void excluir(T t) throws Exception;
-    
-    public T buscar(T t) throws Exception;
-    
-    public List<T> listar(T t) throws Exception;
-    
+public interface DaoI<T extends Model> {
+
+    T getById(Integer id);
+
+    void persist(T entity);
+
+    void delete(T entity);
+
+    List<T> findAll();
 }

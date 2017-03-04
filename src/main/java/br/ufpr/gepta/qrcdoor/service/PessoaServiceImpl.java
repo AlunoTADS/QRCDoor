@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufpr.gepta.qrcdoor.model;
+package br.ufpr.gepta.qrcdoor.service;
 
+import br.ufpr.gepta.qrcdoor.service.PessoaService;
 import java.util.List;
 
 /**
