@@ -5,24 +5,24 @@
  */
 package br.ufpr.gepta.qrcdoor.model;
 
-import javax.persistence.Column;
+/*import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import static javax.swing.text.StyleConstants.Size;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.Size;*/
 
 /**
  *
  * @author Lucas
  */
-@Entity
-@Table(name = "Pessoa")
+/*@Entity
+@Table(name = "Pessoa")*/
 public class Pessoa {
 
-    @Id
+   /* @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPessoa;
 
@@ -30,30 +30,20 @@ public class Pessoa {
     @Column(name = "nome", nullable = false)
     private String nome;
 
-    /**
-     * @return the idPessoa
-     */
+   
     private int getIdPessoa() {
         return idPessoa;
     }
 
-    /**
-     * @param idPessoa the idPessoa to set
-     */
+  
     private void setIdPessoa(int idPessoa) {
         this.idPessoa = idPessoa;
     }
 
-    /**
-     * @return the nome
-     */
     private String getNome() {
         return nome;
     }
 
-    /**
-     * @param nome the nome to set
-     */
     private void setNome(String nome) {
         this.nome = nome;
     }
@@ -84,5 +74,5 @@ public class Pessoa {
     @Override
     public String toString() {
         return "Pessoa [idPessoa=" + idPessoa + ", nome=" + nome + "]";
-    }
+    }*/
 }
