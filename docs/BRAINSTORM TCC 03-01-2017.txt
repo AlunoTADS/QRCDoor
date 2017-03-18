@@ -1,0 +1,30 @@
+REUNIÃO TCC 03/01/2017 - CASA DO LUCAS
+
+--------------------------------------------------------------------------
+Tecnologias e Arquiteturas
+Java web + Angular + Modelo MVC + Postgres + Git
+Arduino + Câmera IP
+--------------------------------------------------------------------------
+
+Ideias:
+-Criar gerentes das portas
+-Relatórios de tudo para o gerente
+-O gerente pode controlar suas portas remotamente
+-Relatórios inteligentes que geram estatísticas sobre quantidades de acessos, datas, e horários.
+-Fazer o melhor de cada aspecto focando em segurança.
+-Gerar noção de onde estão os funcionários.
+-Verificar quanto tempo cada porta está abertas
+-Contagem de aberturas de porta por período
+-Estatística de deslocamento dos funcionários
+-Gerente geral. //gerencia tudo mas não abre tudo.
+-Várias chaves(especialização: impressão digital, número, qr code, etc)
+-Portal para o usuário solicitar acesso.
+-Sistema de Cartão Ponto.
+
+23/01 - AS IDEIAS DEVEM ESTAR MADURAS E O ESCOPO DEVE SER DEFINIDO
+
+06/07 - O TCC DEVE ESTAR RODANDO
+
+PEDIR DOCUMENTO MODELO PARA PEDRO
+--------------------------------------------------------------
+VERIFICAR COM O NEVES SE É NECESSÁRIO O (MER)
