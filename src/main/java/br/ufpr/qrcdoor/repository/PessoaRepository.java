@@ -1,4 +1,4 @@
-package br.upfr.qrcdoor.repository;
+package br.ufpr.qrcdoor.repository;
 
 import java.util.List;
 
