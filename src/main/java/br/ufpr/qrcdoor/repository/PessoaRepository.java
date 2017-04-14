@@ -9,8 +9,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import br.ufpr.qrcdoor.entity.Pessoa;
 
 @RepositoryRestResource(collectionResourceRel = "pessoa", path = "pessoa")
-public interface PessoaRepository extends PagingAndSortingRepository<Pessoa, Long> {
-	
+public interface PessoaRepository extends PagingAndSortingRepository<Pessoa, Long> {	
 	List<Pessoa> findByNome(@Param("name") String name);
-
 }

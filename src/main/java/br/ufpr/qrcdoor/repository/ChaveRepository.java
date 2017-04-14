@@ -7,6 +7,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 
 @RepositoryRestResource(collectionResourceRel = "chave", path = "chave")
-public interface ChaveRepository extends PagingAndSortingRepository<Chave, Long> {
-	
+public interface ChaveRepository extends PagingAndSortingRepository<Chave, Long> {	
 }
