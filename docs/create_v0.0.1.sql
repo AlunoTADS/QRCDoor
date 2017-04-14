@@ -3,6 +3,7 @@
  * Created: 04/03/2017
  */
 
+
 CREATE SEQUENCE uf_iduf_seq;
 
 CREATE TABLE Uf (
@@ -116,7 +117,6 @@ CREATE TABLE FuncaoPessoa (
                 idFuncaoPessoa INTEGER NOT NULL,
                 idFuncao BIGINT NOT NULL,
                 idPessoa BIGINT NOT NULL,
-                idFuncaoPessoa_1 INTEGER NOT NULL,
                 dataInicio DATE DEFAULT current_date NOT NULL,
                 dataFim DATE DEFAULT current_date NOT NULL,
                 CONSTRAINT funcaopessoa_pk PRIMARY KEY (idFuncaoPessoa)
