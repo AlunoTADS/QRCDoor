@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Hello WebSocket</title>
+<title>WebSocket</title>
 <link
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -55,7 +55,8 @@
 		</div>
 	</div>
 	<script>
-		var id = Math.random().toString().replace(".", "");
+		// var id = "<%= session.getId() %>";
+		var id = "${pageContext.session.id}".split("-").join("");
 		
 		var stompClient = null;
 
@@ -76,8 +77,9 @@
 			stompClient.connect({}, (frame) => {
 				setConnected(true);
 				console.log("Connected: " + frame);
-				stompClient.subscribe("/open." + id, (greeting) => {
-					showGreeting(JSON.parse(greeting.body).content);
+				// stompClient.subscribe("/open." + id, (greeting) => {
+				stompClient.subscribe("/user/open", (message) => {
+					showGreeting(message.body);
 				});
 			});
 		}
@@ -91,7 +93,7 @@
 		}
 
 		function sendName() {
-			stompClient.send("/app/auth/" + id, {}, JSON.stringify({
+			stompClient.send("/app/auth", {}, JSON.stringify({
 				"name" : $("#name").val()
 			}));
 		}
