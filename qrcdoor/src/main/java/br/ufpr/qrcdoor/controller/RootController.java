@@ -20,4 +20,10 @@ public class RootController {
 	public String onAccess(Model model, Authentication authentication) {
 		return "login/index";
 	}
+	
+	
+	@RequestMapping("/websocket")
+	public String index() {
+		return "websocket/index";
+	}
 }

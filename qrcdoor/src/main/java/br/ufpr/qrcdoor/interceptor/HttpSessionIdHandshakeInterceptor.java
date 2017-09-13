@@ -19,7 +19,7 @@ public class HttpSessionIdHandshakeInterceptor implements HandshakeInterceptor {
 
 	@Override
 	public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
-		logger.info("Handshake interceptor called!!");
+		logger.debug("Handshake interceptor called!!");
 		if (request instanceof ServletServerHttpRequest) {
 			ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
 			HttpSession session = servletRequest.getServletRequest().getSession(false);
