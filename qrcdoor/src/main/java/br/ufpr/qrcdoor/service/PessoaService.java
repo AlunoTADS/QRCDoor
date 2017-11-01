@@ -16,11 +16,7 @@ public class PessoaService {
 	PessoaRepository pessoaRepository;
 	
 	public List<Pessoa> findAll() throws Exception {
-		List<Pessoa> list = this.pessoaRepository.findAll();
-		if (list == null || list.isEmpty()) {
-			throw new ResourceNotFoundException();
-		}
-		return list;
+		return this.pessoaRepository.findAll();
 	}
 	
 	public Pessoa findOne(Long id) throws Exception {

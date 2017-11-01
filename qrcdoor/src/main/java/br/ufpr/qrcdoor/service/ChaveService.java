@@ -16,11 +16,7 @@ public class ChaveService {
 	ChaveRepository chaveRepository;
 	
 	public List<Chave> findAll() throws Exception {
-		List<Chave> list = this.chaveRepository.findAll();
-		if (list == null || list.isEmpty()) {
-			throw new ResourceNotFoundException();
-		}
-		return list;
+		return this.chaveRepository.findAll();
 	}
 	
 	public Chave findOne(Long id) throws Exception {

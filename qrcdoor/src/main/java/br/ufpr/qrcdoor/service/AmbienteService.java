@@ -16,11 +16,7 @@ public class AmbienteService {
 	AmbienteRepository ambienteRepository;
 	
 	public List<Ambiente> findAll() throws Exception {
-		List<Ambiente> list = this.ambienteRepository.findAll();
-		if (list == null || list.isEmpty()) {
-			throw new ResourceNotFoundException();
-		}
-		return list;
+		return this.ambienteRepository.findAll();
 	}
 	
 	public Ambiente findOne(Long id) throws Exception {

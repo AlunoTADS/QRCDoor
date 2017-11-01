@@ -1,0 +1,22 @@
+{
+	"pessoa": {
+		"id": 1,
+		"nome": "Giovanni",
+		"situacao": "A",
+		"documento": "064.635.199-01",
+		"fisicaJuridica": "F",
+		"foto": null,
+		"fotoExtensao": "jpg",
+		"login": "giovannibeltrame",
+		"senha": "1234",
+		"email": "gio.beltrame@gmail.com",
+		"telefoneFixo": "(41) 3030-1040",
+		"telefoneCelular": "(41) 99672-4004",
+		"administrador": "N"
+	},
+	"descricao": "Hello Moto",
+	"situacao": "A",
+	"assinatura": "QRCCODE.ENCRIPTOGRAFADO.VAI.AQUI",
+	"dataInicio": "2017-10-31T00:00:00-02:00",
+	"dataFim": "2017-12-31T00:00:00-02:00"
+}

@@ -1,6 +1,7 @@
 
 package br.ufpr.qrcdoor.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	
+    private static String REALM = "MY_TEST_REALM";
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -23,6 +26,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/chat/info**").permitAll()
 				.antMatchers("/chat**").permitAll()
 				.anyRequest().authenticated()
+				.and().httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint())
+//		        .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 			.logout()
 				.logoutSuccessUrl("/login?logout")
@@ -35,6 +40,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.failureUrl("/login?error")
 				.permitAll();
 	}
+	
+	@Bean
+    public CustomBasicAuthenticationEntryPoint getBasicAuthEntryPoint(){
+        return new CustomBasicAuthenticationEntryPoint();
+    }
 
 
 	@Override

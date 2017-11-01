@@ -1,9 +1,20 @@
 package br.ufpr.qrcdoor.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -35,6 +46,9 @@ public class Chave implements Serializable {
 
 	@Column(length=1, nullable=false)
 	private String situacao;
+	
+	@Column(length=64)
+	private String assinatura;
 
 	//bi-directional many-to-one association to Pessoa
 	@ManyToOne
@@ -90,6 +104,14 @@ public class Chave implements Serializable {
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
+	}
+
+	public String getAssinatura() {
+		return assinatura;
+	}
+
+	public void setAssinatura(String assinatura) {
+		this.assinatura = assinatura;
 	}
 
 }

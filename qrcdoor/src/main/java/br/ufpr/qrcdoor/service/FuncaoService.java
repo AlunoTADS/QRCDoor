@@ -16,11 +16,7 @@ public class FuncaoService {
 	FuncaoRepository funcaoRepository;
 	
 	public List<Funcao> findAll() throws Exception {
-		List<Funcao> list = this.funcaoRepository.findAll();
-		if (list == null || list.isEmpty()) {
-			throw new ResourceNotFoundException();
-		}
-		return list;
+		return this.funcaoRepository.findAll();
 	}
 	
 	public Funcao findOne(Long id) throws Exception {

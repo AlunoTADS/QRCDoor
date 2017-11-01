@@ -16,11 +16,7 @@ public class EstruturaService {
 	EstruturaRepository estruturaRepository;
 	
 	public List<Estrutura> findAll() throws Exception {
-		List<Estrutura> list = this.estruturaRepository.findAll();
-		if (list == null || list.isEmpty()) {
-			throw new ResourceNotFoundException();
-		}
-		return list;
+		return this.estruturaRepository.findAll();
 	}
 	
 	public Estrutura findOne(Long id) throws Exception {

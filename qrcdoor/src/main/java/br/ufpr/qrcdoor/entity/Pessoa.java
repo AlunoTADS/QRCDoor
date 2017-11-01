@@ -7,9 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -32,7 +30,10 @@ public class Pessoa implements Serializable {
 	private Long id;
 
 	@Column(length=32)
-	private String cpf;
+	private String documento;
+	
+	@Column(length=1, nullable=false)
+	private String fisicaJuridica;
 
 	@Lob
 	private byte[] foto;
@@ -43,16 +44,26 @@ public class Pessoa implements Serializable {
 	@Column(length=255, nullable=false)
 	private String nome;
 
-	@Column(length=32, nullable=false)
-	private String rg;
-
 	@Column(length=1, nullable=false)
 	private String situacao;
-
-	//bi-directional many-to-one association to Uf
-	@ManyToOne
-	@JoinColumn(name="idufrg")
-	private Uf uf;
+	
+	@Column(length=32)
+	private String login;
+	
+	@Column(length=32)
+	private String senha;
+	
+	@Column(length=64)
+	private String email;
+	
+	@Column(name="telefonefixo", length=64)
+	private String telefoneFixo;
+	
+	@Column(name="telefonecelular", length=64)
+	private String telefoneCelular;
+	
+	@Column(length=1)
+	private String administrador;
 
 	public Pessoa() {
 	}
@@ -63,14 +74,6 @@ public class Pessoa implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getCpf() {
-		return this.cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
 	}
 
 	public byte[] getFoto() {
@@ -97,14 +100,6 @@ public class Pessoa implements Serializable {
 		this.nome = nome;
 	}
 
-	public String getRg() {
-		return this.rg;
-	}
-
-	public void setRg(String rg) {
-		this.rg = rg;
-	}
-
 	public String getSituacao() {
 		return this.situacao;
 	}
@@ -113,12 +108,68 @@ public class Pessoa implements Serializable {
 		this.situacao = situacao;
 	}
 
-	public Uf getUf() {
-		return this.uf;
+	public String getDocumento() {
+		return documento;
 	}
 
-	public void setUf(Uf uf) {
-		this.uf = uf;
+	public void setDocumento(String documento) {
+		this.documento = documento;
+	}
+
+	public String getFisicaJuridica() {
+		return fisicaJuridica;
+	}
+
+	public void setFisicaJuridica(String fisicaJuridica) {
+		this.fisicaJuridica = fisicaJuridica;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTelefoneFixo() {
+		return telefoneFixo;
+	}
+
+	public void setTelefoneFixo(String telefoneFixo) {
+		this.telefoneFixo = telefoneFixo;
+	}
+
+	public String getTelefoneCelular() {
+		return telefoneCelular;
+	}
+
+	public void setTelefoneCelular(String telefoneCelular) {
+		this.telefoneCelular = telefoneCelular;
+	}
+
+	public String getAdministrador() {
+		return administrador;
+	}
+
+	public void setAdministrador(String administrador) {
+		this.administrador = administrador;
 	}
 
 }
