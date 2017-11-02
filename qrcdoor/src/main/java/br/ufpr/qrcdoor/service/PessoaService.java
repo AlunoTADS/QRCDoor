@@ -11,6 +11,7 @@ import br.ufpr.qrcdoor.entity.Pessoa;
 import br.ufpr.qrcdoor.exception.BusinessException;
 import br.ufpr.qrcdoor.exception.ResourceNotFoundException;
 import br.ufpr.qrcdoor.repository.PessoaRepository;
+import br.ufpr.qrcdoor.util.Util;
 
 @Service
 public class PessoaService {
@@ -33,8 +34,9 @@ public class PessoaService {
 	}
 	
 	public Pessoa save(Pessoa pessoa) throws Exception {
-		if (this.pessoaRepository.findByLogin(pessoa.getLogin()) != null) {
-//			throw new BusinessException("Login já existente no sistema, aplique outro nome e tente novamente.", "login");
+		HashMap<String, List<String>> businessErrors = this.validateBusinessRules(pessoa);
+		if (businessErrors.size() > 0) {
+			throw new BusinessException("BusinessException", businessErrors);
 		}
 		pessoa.setSenha(passwordEncoder.encode(pessoa.getSenha()));
 		return this.pessoaRepository.saveAndFlush(pessoa);
@@ -49,7 +51,19 @@ public class PessoaService {
 		
 		// Valida se login é único
 		if (this.pessoaRepository.findByLogin(pessoa.getLogin()) != null) {
-			
+			errors = Util.insertOrUpdateHashMap(errors, "login", "Login já existente no sistema, aplique outro e tente novamente.");
+		}
+		// Valida se documento é único
+		if (this.pessoaRepository.findByDocumento(pessoa.getDocumento()) != null) {
+			errors = Util.insertOrUpdateHashMap(errors, "documento", "Documento já existente no sistema, aplique outro e tente novamente.");
+		}
+		// Valida se email é único
+		if (this.pessoaRepository.findByEmail(pessoa.getEmail()) != null) {
+			errors = Util.insertOrUpdateHashMap(errors, "email", "Email já existente no sistema, aplique outro e tente novamente.");
+		}
+		// Valida se extensão da foto é permitida
+		if (",png,jpg,jpeg,".contains("," + pessoa.getFotoExtensao() + ",")) {
+			errors = Util.insertOrUpdateHashMap(errors, "foto", "A extensão da foto não é permitida.");
 		}
 		
 		return errors;

@@ -14,5 +14,9 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 	public Pessoa loadProfile(@Param("login") String login);
 	
 	public Pessoa findByLogin(String login);
+	
+	public Pessoa findByDocumento(String documento);
+	
+	public Pessoa findByEmail(String email);
 
 }
