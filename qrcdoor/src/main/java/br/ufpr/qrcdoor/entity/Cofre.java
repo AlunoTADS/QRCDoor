@@ -13,8 +13,19 @@ import javax.persistence.*;
 @NamedQuery(name="Cofre.findAll", query="SELECT c FROM Cofre c")
 public class Cofre extends Estrutura implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+	@Column(length=64)
+	private String senha;
 
 	public Cofre() {
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 }

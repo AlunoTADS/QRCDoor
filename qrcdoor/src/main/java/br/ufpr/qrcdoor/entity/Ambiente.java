@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Ambiente extends Estrutura implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="quantidademaximapessoas", nullable=false)
+	@Column(name="quantidademaximapessoas")
 	private Integer quantidadeMaximaPessoas;
 
 	public Ambiente() {

@@ -1,0 +1,16 @@
+{
+	"estruturaPai": {
+		"id": 1,
+		"descricao": "Porta",
+		"situacao": "A",
+		"tempoMaximoAbertura": 5,
+		"foto": null,
+		"fotoExtensao": "png"
+	},
+	"descricao": "Cofre",
+	"situacao": "A",
+	"tempoMaximoAbertura": 1,
+	"foto": null,
+	"fotoExtensao": "png",
+	"senha": "senha1234"
+}

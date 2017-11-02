@@ -1,0 +1,15 @@
+{
+	"estruturaPai": {
+		"id": 1,
+		"descricao": "Porta",
+		"situacao": "A",
+		"tempoMaximoAbertura": 5,
+		"foto": null,
+		"fotoExtensao": "png"
+	},
+	"descricao": "Porta",
+	"situacao": "A",
+	"tempoMaximoAbertura": 5,
+	"foto": null,
+	"fotoExtensao": "png"
+}

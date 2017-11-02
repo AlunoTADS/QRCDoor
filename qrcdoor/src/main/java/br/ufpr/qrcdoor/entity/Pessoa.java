@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -62,10 +64,18 @@ public class Pessoa implements Serializable {
 	@Column(name="telefonecelular", length=64)
 	private String telefoneCelular;
 	
-	@Column(length=1)
-	private String administrador;
+	@Enumerated(EnumType.STRING)
+	@Column(length=32)
+	private RoleEnum role;
 
 	public Pessoa() {
+	}
+	
+	public Pessoa(String login, String senha, RoleEnum role) {
+		super();
+		this.login = login;
+		this.senha = senha;
+		this.role = role;
 	}
 
 	public Long getId() {
@@ -164,12 +174,12 @@ public class Pessoa implements Serializable {
 		this.telefoneCelular = telefoneCelular;
 	}
 
-	public String getAdministrador() {
-		return administrador;
+	public RoleEnum getRole() {
+		return role;
 	}
 
-	public void setAdministrador(String administrador) {
-		this.administrador = administrador;
+	public void setRole(RoleEnum role) {
+		this.role = role;
 	}
 
 }
