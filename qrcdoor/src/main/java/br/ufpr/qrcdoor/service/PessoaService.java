@@ -34,7 +34,7 @@ public class PessoaService {
 	
 	public Pessoa save(Pessoa pessoa) throws Exception {
 		if (this.pessoaRepository.findByLogin(pessoa.getLogin()) != null) {
-			throw new BusinessException("Login já existente no sistema, aplique outro nome e tente novamente.", "login");
+//			throw new BusinessException("Login já existente no sistema, aplique outro nome e tente novamente.", "login");
 		}
 		pessoa.setSenha(passwordEncoder.encode(pessoa.getSenha()));
 		return this.pessoaRepository.saveAndFlush(pessoa);
