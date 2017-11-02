@@ -28,7 +28,7 @@ public class ExceptionHandlerAdvice {
 	public ResponseEntity handleBusinessException(BusinessException e) {
 		log.error(e);
 		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-				.body(e.getMessage());
+				.body(e);
 	}
 
 	@ExceptionHandler({ JsonParseException.class, JsonMappingException.class, IOException.class })

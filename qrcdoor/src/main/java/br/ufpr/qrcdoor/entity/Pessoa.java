@@ -49,10 +49,10 @@ public class Pessoa implements Serializable {
 	@Column(length=1, nullable=false)
 	private String situacao;
 	
-	@Column(length=32)
+	@Column(length=32, unique=true)
 	private String login;
 	
-	@Column(length=32)
+	@Column(length=255)
 	private String senha;
 	
 	@Column(length=64)

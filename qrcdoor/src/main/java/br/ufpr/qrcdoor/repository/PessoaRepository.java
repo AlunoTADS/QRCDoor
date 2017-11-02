@@ -10,7 +10,9 @@ import br.ufpr.qrcdoor.entity.Pessoa;
 @Repository
 public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 	
-	@Query("select new Pessoa(p.login, p.senha, p.role) from Pessoa p where p.login = :login and p.senha = :senha")
-	public Pessoa loadProfile(@Param("login") String login, @Param("senha") String senha);
+	@Query("select new Pessoa(p.login, p.senha, p.role) from Pessoa p where p.login = :login")
+	public Pessoa loadProfile(@Param("login") String login);
+	
+	public Pessoa findByLogin(String login);
 
 }

@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.ufpr.qrcdoor.entity.Pessoa;
@@ -27,11 +28,10 @@ public class ProfileDetailsService implements UserDetailsService {
 		return null;
 	}
 	
-	
 	public UserDetails loadUserByLoginAndPassword(String login, String senha) throws UsernameNotFoundException {
-		Pessoa profile = repository.loadProfile(login, senha);
+		Pessoa profile = repository.loadProfile(login);
 
-		if (profile == null) {
+		if (profile == null || !new BCryptPasswordEncoder().matches(senha, profile.getSenha())) {
 			throw new UsernameNotFoundException("Usuário e senha inválidos.");
 		}
 		
@@ -43,5 +43,4 @@ public class ProfileDetailsService implements UserDetailsService {
 		return new User(profile.getLogin(), profile.getSenha(), grants);
 	}
 	
-
 }
