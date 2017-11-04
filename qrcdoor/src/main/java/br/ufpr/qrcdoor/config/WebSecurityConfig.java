@@ -49,6 +49,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.permitAll();
 	}
 	
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.authenticationProvider(authProvider);
+	}
+	
 	@Bean
     public CustomBasicAuthenticationEntryPoint getBasicAuthEntryPoint(){
         return new CustomBasicAuthenticationEntryPoint();
@@ -57,25 +62,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 	    return new BCryptPasswordEncoder();
-	}
-	
-	@Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("*");
-            }
-        };
-    }
-
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		auth
-//			.inMemoryAuthentication()
-//				.withUser("user1").password("user1").roles("USER").and()
-//				.withUser("user2").password("user2").roles("USER").and()
-//				.withUser("user3").password("user3").roles("ADMIN","USER");
-		auth.authenticationProvider(authProvider);
 	}
 }
