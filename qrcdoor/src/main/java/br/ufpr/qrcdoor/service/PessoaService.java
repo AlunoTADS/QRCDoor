@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +23,9 @@ public class PessoaService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	public List<Pessoa> findAll() throws Exception {
-		return this.pessoaRepository.findAll();
+	public Page<Pessoa> find(String nome, Pageable pageable) throws Exception {
+		nome = (nome == null) ? "" : nome;
+		return this.pessoaRepository.findByNomeContaining(nome, pageable);
 	}
 	
 	public Pessoa findOne(Long id) throws Exception {

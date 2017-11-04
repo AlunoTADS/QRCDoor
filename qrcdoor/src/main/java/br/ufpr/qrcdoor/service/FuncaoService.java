@@ -1,8 +1,8 @@
 package br.ufpr.qrcdoor.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.ufpr.qrcdoor.entity.Funcao;
@@ -15,8 +15,9 @@ public class FuncaoService {
 	@Autowired
 	FuncaoRepository funcaoRepository;
 	
-	public List<Funcao> findAll() throws Exception {
-		return this.funcaoRepository.findAll();
+	public Page<Funcao> find(String descricao, Pageable pageable) throws Exception {
+		descricao = (descricao == null) ? "" : descricao;
+		return this.funcaoRepository.findByDescricaoContaining(descricao, pageable);
 	}
 	
 	public Funcao findOne(Long id) throws Exception {

@@ -1,8 +1,8 @@
 package br.ufpr.qrcdoor.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.ufpr.qrcdoor.entity.Estrutura;
@@ -15,8 +15,9 @@ public class EstruturaService {
 	@Autowired
 	EstruturaRepository estruturaRepository;
 	
-	public List<Estrutura> findAll() throws Exception {
-		return this.estruturaRepository.findAll();
+	public Page<Estrutura> find(String descricao, Pageable pageable) throws Exception {
+		descricao = (descricao == null) ? "" : descricao;
+		return this.estruturaRepository.findByDescricaoContaining(descricao, pageable);
 	}
 	
 	public Estrutura findOne(Long id) throws Exception {

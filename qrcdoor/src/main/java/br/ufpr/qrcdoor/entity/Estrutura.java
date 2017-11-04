@@ -14,6 +14,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 /**
  * The persistent class for the "Estrutura" database table.
@@ -42,6 +44,7 @@ public class Estrutura implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name="idestruturapai")
+	@JsonBackReference
 	private Estrutura estruturaPai;
 
 	@Column(length=1, nullable=false)
