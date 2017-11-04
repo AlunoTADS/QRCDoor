@@ -1,0 +1,29 @@
+{
+	"estrutura": {
+		"id": 1,
+		"estruturaPai": {
+			"id": 1,
+			"descricao": "Porta",
+			"situacao": "A",
+			"tempoMaximoAbertura": 5,
+			"foto": null,
+			"fotoExtensao": "png"
+		},
+		"descricao": "Porta",
+		"situacao": "A",
+		"tempoMaximoAbertura": 5,
+		"foto": null,
+		"fotoExtensao": "png"
+	},
+	"herda": false,
+	"gerencia": false,
+	"monitora": false,
+	"abre": true,
+	"fecha": true,
+	"diasSemana": "DSTQQSS",
+	"meses": "JFMAMJJASOND",
+	"dataInicio": "2017-10-31T00:00:00-02:00",
+	"dataFim": "2017-12-31T00:00:00-02:00",
+	"horaInicio": "2017-01-01T08:00:00-02:00",
+	"horaFim": "2017-01-01T00:00:00-02:00"
+}

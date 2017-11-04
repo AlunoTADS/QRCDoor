@@ -1,14 +1,14 @@
 {
 	"nome": "Giovanni",
 	"situacao": "A",
-	"documento": "064.635.199-01",
+	"documento": "064.635.200-01",
 	"fisicaJuridica": "F",
 	"foto": null,
 	"fotoExtensao": "jpg",
 	"login": "giovannibeltrame",
 	"senha": "1234",
-	"email": "gio.beltrame@gmail.com",
+	"email": "gio.beltrame@hotmail.com",
 	"telefoneFixo": "(41) 3030-1040",
 	"telefoneCelular": "(41) 99672-4004",
-	"administrador": "N"
+	"role": "USUARIO"
 }

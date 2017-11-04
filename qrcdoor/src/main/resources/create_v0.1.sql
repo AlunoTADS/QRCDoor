@@ -311,3 +311,11 @@ REFERENCES "public"."Senha" ("idChave")
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
+
+
+
+
+
+
+insert into pessoa
+values (0,'064.635.199-01','gio.beltrame@gmail.com','F',null,'jpg','admin','Giovanni','ADMINISTRADOR','$2a$10$hPQBWLPxsXDQhX4VCYjYfumFgDkCTlRgdf/k/LJ4ZEJT7Ny2Ag.yi','A','996724004','30301040');

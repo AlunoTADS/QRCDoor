@@ -62,7 +62,7 @@ public class PessoaService {
 			errors = Util.insertOrUpdateHashMap(errors, "email", "Email já existente no sistema, aplique outro e tente novamente.");
 		}
 		// Valida se extensão da foto é permitida
-		if (",png,jpg,jpeg,".contains("," + pessoa.getFotoExtensao() + ",")) {
+		if (!",png,jpg,jpeg,".contains("," + pessoa.getFotoExtensao() + ",")) {
 			errors = Util.insertOrUpdateHashMap(errors, "foto", "A extensão da foto não é permitida.");
 		}
 		

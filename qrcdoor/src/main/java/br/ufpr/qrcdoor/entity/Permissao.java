@@ -40,7 +40,7 @@ public class Permissao implements Serializable {
 	private Boolean abre;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="dataFim", nullable=false)
+	@Column(name="datafim", nullable=false)
 	private Date dataFim;
 
 	@Temporal(TemporalType.DATE)
