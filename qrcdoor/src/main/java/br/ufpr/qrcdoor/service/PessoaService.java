@@ -37,7 +37,10 @@ public class PessoaService {
 	}
 	
 	public Pessoa save(Pessoa pessoa) throws Exception {
-		HashMap<String, List<String>> businessErrors = this.validateBusinessRules(pessoa);
+		HashMap<String, List<String>> businessErrors = new HashMap<String, List<String>>();
+		if (pessoa.getId() == null) {
+			businessErrors = this.validateBusinessRules(pessoa);
+		}
 		if (businessErrors.size() > 0) {
 			throw new BusinessException("BusinessException", businessErrors);
 		}
