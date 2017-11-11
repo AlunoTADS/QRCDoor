@@ -13,173 +13,176 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
+import org.hibernate.annotations.Type;
 
 /**
  * The persistent class for the "Pessoa" database table.
- * 
+ *
  */
 @Entity
-@Table(name="pessoa")
-@NamedQuery(name="Pessoa.findAll", query="SELECT p FROM Pessoa p")
+@Table(name = "pessoa")
+@NamedQuery(name = "Pessoa.findAll", query = "SELECT p FROM Pessoa p")
 public class Pessoa implements Serializable {
-	private static final long serialVersionUID = 1L;
 
-	@Id
-	@SequenceGenerator(name="pessoa_idpessoa_seq", sequenceName="pessoa_idpessoa_seq", allocationSize=1, initialValue=1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="pessoa_idpessoa_seq")
-	@Column(name="idpessoa", unique=true, nullable=false)
-	private Long id;
+    private static final long serialVersionUID = 1L;
 
-	@Column(length=32)
-	private String documento;
-	
-	@Column(length=1, nullable=false)
-	private String fisicaJuridica;
+    @Id
+    @SequenceGenerator(name = "pessoa_idpessoa_seq", sequenceName = "pessoa_idpessoa_seq", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pessoa_idpessoa_seq")
+    @Column(name = "idpessoa", unique = true, nullable = false)
+    private Long id;
 
-	@Lob
-	private byte[] foto;
+    @Column(length = 32)
+    private String documento;
 
-	@Column(name="fotoextensao", length=16)
-	private String fotoExtensao;
+    @Column(name = "fisicajuridica", length = 1, nullable = false)
+    private String fisicaJuridica;
 
-	@Column(length=255, nullable=false)
-	private String nome;
+    @Lob
+    @Column(name = "foto")
+    @Type(type = "org.hibernate.type.BinaryType")
+    private byte[] foto;
 
-	@Column(length=1, nullable=false)
-	private String situacao;
-	
-	@Column(length=32, unique=true)
-	private String login;
-	
-	@Column(length=255)
-	private String senha;
-	
-	@Column(length=64)
-	private String email;
-	
-	@Column(name="telefonefixo", length=64)
-	private String telefoneFixo;
-	
-	@Column(name="telefonecelular", length=64)
-	private String telefoneCelular;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(length=32)
-	private RoleEnum role;
+    @Column(name = "fotoextensao", length = 16)
+    private String fotoExtensao;
 
-	public Pessoa() {
-	}
-	
-	public Pessoa(String login, String senha, RoleEnum role) {
-		super();
-		this.login = login;
-		this.senha = senha;
-		this.role = role;
-	}
+    @Column(name = "nome", length = 255, nullable = false)
+    private String nome;
 
-	public Long getId() {
-		return this.id;
-	}
+    @Column(name = "situacao", length = 1, nullable = false)
+    private String situacao;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @Column(name = "login", length = 32, unique = true)
+    private String login;
 
-	public byte[] getFoto() {
-		return this.foto;
-	}
+    @Column(name = "senha", length = 255)
+    private String senha;
 
-	public void setFoto(byte[] foto) {
-		this.foto = foto;
-	}
+    @Column(name = "email", length = 64)
+    private String email;
 
-	public String getFotoExtensao() {
-		return this.fotoExtensao;
-	}
+    @Column(name = "telefonefixo", length = 64)
+    private String telefoneFixo;
 
-	public void setFotoExtensao(String fotoExtensao) {
-		this.fotoExtensao = fotoExtensao;
-	}
+    @Column(name = "telefonecelular", length = 64)
+    private String telefoneCelular;
 
-	public String getNome() {
-		return this.nome;
-	}
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", length = 32)
+    private RoleEnum role;
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public Pessoa() {
+    }
 
-	public String getSituacao() {
-		return this.situacao;
-	}
+    public Pessoa(String login, String senha, RoleEnum role) {
+        super();
+        this.login = login;
+        this.senha = senha;
+        this.role = role;
+    }
 
-	public void setSituacao(String situacao) {
-		this.situacao = situacao;
-	}
+    public Long getId() {
+        return this.id;
+    }
 
-	public String getDocumento() {
-		return documento;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setDocumento(String documento) {
-		this.documento = documento;
-	}
+    public byte[] getFoto() {
+        return this.foto;
+    }
 
-	public String getFisicaJuridica() {
-		return fisicaJuridica;
-	}
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
 
-	public void setFisicaJuridica(String fisicaJuridica) {
-		this.fisicaJuridica = fisicaJuridica;
-	}
+    public String getFotoExtensao() {
+        return this.fotoExtensao;
+    }
 
-	public String getLogin() {
-		return login;
-	}
+    public void setFotoExtensao(String fotoExtensao) {
+        this.fotoExtensao = fotoExtensao;
+    }
 
-	public void setLogin(String login) {
-		this.login = login;
-	}
+    public String getNome() {
+        return this.nome;
+    }
 
-	public String getSenha() {
-		return senha;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
+    public String getSituacao() {
+        return this.situacao;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getDocumento() {
+        return documento;
+    }
 
-	public String getTelefoneFixo() {
-		return telefoneFixo;
-	}
+    public void setDocumento(String documento) {
+        this.documento = documento;
+    }
 
-	public void setTelefoneFixo(String telefoneFixo) {
-		this.telefoneFixo = telefoneFixo;
-	}
+    public String getFisicaJuridica() {
+        return fisicaJuridica;
+    }
 
-	public String getTelefoneCelular() {
-		return telefoneCelular;
-	}
+    public void setFisicaJuridica(String fisicaJuridica) {
+        this.fisicaJuridica = fisicaJuridica;
+    }
 
-	public void setTelefoneCelular(String telefoneCelular) {
-		this.telefoneCelular = telefoneCelular;
-	}
+    public String getLogin() {
+        return login;
+    }
 
-	public RoleEnum getRole() {
-		return role;
-	}
+    public void setLogin(String login) {
+        this.login = login;
+    }
 
-	public void setRole(RoleEnum role) {
-		this.role = role;
-	}
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefoneFixo() {
+        return telefoneFixo;
+    }
+
+    public void setTelefoneFixo(String telefoneFixo) {
+        this.telefoneFixo = telefoneFixo;
+    }
+
+    public String getTelefoneCelular() {
+        return telefoneCelular;
+    }
+
+    public void setTelefoneCelular(String telefoneCelular) {
+        this.telefoneCelular = telefoneCelular;
+    }
+
+    public RoleEnum getRole() {
+        return role;
+    }
+
+    public void setRole(RoleEnum role) {
+        this.role = role;
+    }
 
 }
