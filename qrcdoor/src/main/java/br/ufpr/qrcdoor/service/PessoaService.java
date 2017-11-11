@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import br.ufpr.qrcdoor.entity.Pessoa;
 import br.ufpr.qrcdoor.exception.BusinessException;
 import br.ufpr.qrcdoor.exception.ResourceNotFoundException;
 import br.ufpr.qrcdoor.repository.PessoaRepository;
+import br.ufpr.qrcdoor.specification.PessoaSpecification;
 import br.ufpr.qrcdoor.util.Util;
 
 @Service
@@ -23,9 +25,10 @@ public class PessoaService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	public Page<Pessoa> find(String nome, Pageable pageable) throws Exception {
-		nome = (nome == null) ? "" : nome;
-		return this.pessoaRepository.findByNomeContaining(nome, pageable);
+	public Page<Pessoa> find(String query, Pageable pageable) throws Exception {
+		query = (query == null) ? "" : query;
+		Specification<Pessoa> searchSpec = PessoaSpecification.searchContainsIgnoreCase(query);
+		return this.pessoaRepository.findAll(searchSpec, pageable);
 	}
 	
 	public Pessoa findOne(Long id) throws Exception {
