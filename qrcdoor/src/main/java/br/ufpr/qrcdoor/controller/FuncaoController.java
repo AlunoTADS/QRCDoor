@@ -27,8 +27,8 @@ public class FuncaoController {
 	private FuncaoService funcaoService;
 	
 	@GetMapping("/funcoes")
-	public Page<Funcao> get(@RequestParam(required=false, name="q") String descricao, Pageable pageable) throws Exception {
-		return this.funcaoService.find(descricao, pageable);
+	public Page<Funcao> get(@RequestParam(required=false, name="q") String query, Pageable pageable) throws Exception {
+		return this.funcaoService.find(query, pageable);
 	}
 
 	@GetMapping("/funcao/{id}")

@@ -27,8 +27,8 @@ public class PessoaController {
 	private PessoaService pessoaService;
 	
 	@GetMapping("/pessoas")
-	public Page<Pessoa> get(@RequestParam(required=false, name="q") String nome, Pageable pageable) throws Exception {
-		return this.pessoaService.find(nome, pageable);
+	public Page<Pessoa> get(@RequestParam(required=false, name="q") String query, Pageable pageable) throws Exception {
+		return this.pessoaService.find(query, pageable);
 	}
 
 	@GetMapping("/pessoa/{id}")

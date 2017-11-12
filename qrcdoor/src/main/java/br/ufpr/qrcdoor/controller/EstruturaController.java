@@ -29,8 +29,8 @@ public class EstruturaController {
 	
 	@GetMapping("/estruturas")
 	@ResponseBody
-	public Page<Estrutura> get(@RequestParam(required=false, name="q") String descricao, Pageable pageable) throws Exception {
-		return this.estruturaService.find(descricao, pageable);
+	public Page<Estrutura> get(@RequestParam(required=false, name="q") String query, Pageable pageable) throws Exception {
+		return this.estruturaService.find(query, pageable);
 	}
 
 	@GetMapping("/estrutura/{id}")

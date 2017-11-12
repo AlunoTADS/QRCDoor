@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.util.StringUtils;
+
 public class Util {
 	
 	public static HashMap<String, List<String>> insertOrUpdateHashMap(HashMap<String, List<String>> hashMap, String key, final String value) {
@@ -16,5 +18,14 @@ public class Util {
 		}
 		return hashMap;
 	}
+	
+    public static String getContainsLikePattern(String searchTerm) {
+        if (StringUtils.isEmpty(searchTerm)) {
+            return "%";
+        }
+        else {
+            return "%" + searchTerm.toLowerCase() + "%";
+        }
+    }
 
 }

@@ -1,7 +1,5 @@
 package br.ufpr.qrcdoor.repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -22,6 +20,4 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long>, JpaSpecif
 	
 	public Pessoa findByEmail(String email);
 	
-	public Page<Pessoa> findByNomeContaining(String nome, Pageable pageable);
-
 }

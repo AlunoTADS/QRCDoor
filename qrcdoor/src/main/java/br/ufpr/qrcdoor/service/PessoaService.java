@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import br.ufpr.qrcdoor.entity.Pessoa;
 import br.ufpr.qrcdoor.exception.BusinessException;
@@ -26,7 +27,6 @@ public class PessoaService {
 	private PasswordEncoder passwordEncoder;
 	
 	public Page<Pessoa> find(String query, Pageable pageable) throws Exception {
-		query = (query == null) ? "" : query;
 		Specification<Pessoa> searchSpec = PessoaSpecification.searchContainsIgnoreCase(query);
 		return this.pessoaRepository.findAll(searchSpec, pageable);
 	}
@@ -47,8 +47,7 @@ public class PessoaService {
 		if (businessErrors.size() > 0) {
 			throw new BusinessException("BusinessException", businessErrors);
 		}
-		pessoa.setSenha(passwordEncoder.encode(pessoa.getSenha()));
-		return this.pessoaRepository.saveAndFlush(pessoa);
+		return this.pessoaRepository.saveAndFlush(this.changePassword(pessoa));
 	}
 	
 	public void delete(Long id) throws Exception {
@@ -76,6 +75,15 @@ public class PessoaService {
 		}
 		
 		return errors;
+	}
+	
+	public Pessoa changePassword(Pessoa pessoa) {
+		if (StringUtils.isEmpty(pessoa.getSenha())) {
+			pessoa.setSenha(this.pessoaRepository.findOne(pessoa.getId()).getSenha());
+		} else {
+			pessoa.setSenha(passwordEncoder.encode(pessoa.getSenha()));
+		}
+		return pessoa;
 	}
 
 }
