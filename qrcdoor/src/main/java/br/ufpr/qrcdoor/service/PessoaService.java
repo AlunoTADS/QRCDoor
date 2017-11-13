@@ -20,17 +20,17 @@ import br.ufpr.qrcdoor.util.Util;
 
 @Service
 public class PessoaService {
-	
+
 	@Autowired
 	PessoaRepository pessoaRepository;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	public Page<Pessoa> find(String query, Pageable pageable) throws Exception {
 		Specification<Pessoa> searchSpec = PessoaSpecification.searchContainsIgnoreCase(query);
 		return this.pessoaRepository.findAll(searchSpec, pageable);
 	}
-	
+
 	public Pessoa findOne(Long id) throws Exception {
 		Pessoa pessoa = this.pessoaRepository.findOne(id);
 		if (pessoa == null) {
@@ -38,45 +38,86 @@ public class PessoaService {
 		}
 		return pessoa;
 	}
-	
-	public Pessoa save(Pessoa pessoa) throws Exception {
-		HashMap<String, List<String>> businessErrors = new HashMap<String, List<String>>();
-		if (pessoa.getId() == null) {
-			businessErrors = this.validateBusinessRules(pessoa);
-		}
+
+	public Pessoa insert(Pessoa pessoa) throws Exception {
+		HashMap<String, List<String>> businessErrors = this.validateInsertBusinessRules(pessoa);
 		if (businessErrors.size() > 0) {
 			throw new BusinessException("BusinessException", businessErrors);
 		}
 		return this.pessoaRepository.saveAndFlush(this.changePassword(pessoa));
 	}
-	
+
+	public Pessoa update(Pessoa pessoa) throws Exception {
+		HashMap<String, List<String>> businessErrors = this.validateUpdateBusinessRules(pessoa);
+		if (businessErrors.size() > 0) {
+			throw new BusinessException("BusinessException", businessErrors);
+		}
+		return this.pessoaRepository.saveAndFlush(this.changePassword(pessoa));
+	}
+
 	public void delete(Long id) throws Exception {
 		this.pessoaRepository.delete(id);
 	}
-	
-	public HashMap<String, List<String>> validateBusinessRules(Pessoa pessoa) {
+
+	public HashMap<String, List<String>> validateInsertBusinessRules(Pessoa pessoa) {
 		HashMap<String, List<String>> errors = new HashMap<String, List<String>>();
-		
+
 		// Valida se login é único
 		if (this.pessoaRepository.findByLogin(pessoa.getLogin()) != null) {
-			errors = Util.insertOrUpdateHashMap(errors, "login", "Login já existente no sistema, aplique outro e tente novamente.");
+			errors = Util.insertOrUpdateHashMap(errors, "login",
+					"Login já existente no sistema, aplique outro e tente novamente.");
 		}
 		// Valida se documento é único
 		if (this.pessoaRepository.findByDocumento(pessoa.getDocumento()) != null) {
-			errors = Util.insertOrUpdateHashMap(errors, "documento", "Documento já existente no sistema, aplique outro e tente novamente.");
+			errors = Util.insertOrUpdateHashMap(errors, "documento",
+					"Documento já existente no sistema, aplique outro e tente novamente.");
 		}
 		// Valida se email é único
 		if (this.pessoaRepository.findByEmail(pessoa.getEmail()) != null) {
-			errors = Util.insertOrUpdateHashMap(errors, "email", "Email já existente no sistema, aplique outro e tente novamente.");
+			errors = Util.insertOrUpdateHashMap(errors, "email",
+					"Email já existente no sistema, aplique outro e tente novamente.");
 		}
 		// Valida se extensão da foto é permitida
 		if (!",png,jpg,jpeg,".contains("," + pessoa.getFotoExtensao() + ",")) {
 			errors = Util.insertOrUpdateHashMap(errors, "foto", "A extensão da foto não é permitida.");
 		}
-		
+
 		return errors;
 	}
-	
+
+	public HashMap<String, List<String>> validateUpdateBusinessRules(Pessoa pessoa) {
+		HashMap<String, List<String>> errors = new HashMap<String, List<String>>();
+		Pessoa oldPessoa = this.pessoaRepository.findOne(pessoa.getId());
+
+		// Valida se login é único
+		if (!pessoa.getLogin().equals(oldPessoa.getLogin())) {
+			if (this.pessoaRepository.findByLogin(pessoa.getLogin()) != null) {
+				errors = Util.insertOrUpdateHashMap(errors, "login",
+						"Login já existente no sistema, aplique outro e tente novamente.");
+			}
+		}
+		// Valida se documento é único
+		if (!pessoa.getDocumento().equals(oldPessoa.getDocumento())) {
+			if (this.pessoaRepository.findByDocumento(pessoa.getDocumento()) != null) {
+				errors = Util.insertOrUpdateHashMap(errors, "documento",
+						"Documento já existente no sistema, aplique outro e tente novamente.");
+			}
+		}
+		// Valida se email é único
+		if (!pessoa.getEmail().equals(oldPessoa.getEmail())) {
+			if (this.pessoaRepository.findByEmail(pessoa.getEmail()) != null) {
+				errors = Util.insertOrUpdateHashMap(errors, "email",
+						"Email já existente no sistema, aplique outro e tente novamente.");
+			}
+		}
+		// Valida se extensão da foto é permitida
+		if (!",png,jpg,jpeg,".contains("," + pessoa.getFotoExtensao() + ",")) {
+			errors = Util.insertOrUpdateHashMap(errors, "foto", "A extensão da foto não é permitida.");
+		}
+
+		return errors;
+	}
+
 	public Pessoa changePassword(Pessoa pessoa) {
 		if (StringUtils.isEmpty(pessoa.getSenha())) {
 			pessoa.setSenha(this.pessoaRepository.findOne(pessoa.getId()).getSenha());

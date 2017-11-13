@@ -39,13 +39,13 @@ public class PessoaController {
 	@PostMapping("/pessoas")
 	public ResponseEntity post(@RequestBody String body) throws Exception {
 		Pessoa pessoa = new ObjectMapper().readValue(body, Pessoa.class);
-		return ResponseEntity.status(HttpStatus.OK).body(this.pessoaService.save(pessoa));
+		return ResponseEntity.status(HttpStatus.OK).body(this.pessoaService.insert(pessoa));
 	}
 
 	@PutMapping("/pessoas")
 	public ResponseEntity put(@RequestBody String body) throws Exception {
 		Pessoa pessoa = new ObjectMapper().readValue(body, Pessoa.class);
-		return ResponseEntity.status(HttpStatus.OK).body(this.pessoaService.save(pessoa));
+		return ResponseEntity.status(HttpStatus.OK).body(this.pessoaService.update(pessoa));
 	}
 
 	@DeleteMapping("/pessoas/{id}")
