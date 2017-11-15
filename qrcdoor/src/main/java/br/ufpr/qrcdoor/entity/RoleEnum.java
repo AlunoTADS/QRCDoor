@@ -2,7 +2,7 @@ package br.ufpr.qrcdoor.entity;
 
 public enum RoleEnum {
 	
-	ADMINISTRADOR("ROLE_ADMINISTRADOR"), USUARIO("ROLE_USUARIO");
+	ADMINISTRADOR("ROLE_ADMINISTRADOR"), USUARIO("ROLE_USUARIO"), ESTRUTURA("ROLE_ESTRUTURA");
 	
 	private String value;
 	

@@ -21,10 +21,10 @@ public class ProfileAuthenticationProvider implements AuthenticationProvider {
 		String login = authentication.getName();
 		String senha = authentication.getCredentials().toString();
 		UserDetails user = profileDetailsService.loadUserByLoginAndPassword(login, senha);
-		if((login != null && !login.equals("")) && (senha != null && !senha.equals(""))) {
+//		if((login != null && !login.equals("")) && (senha != null && !senha.equals(""))) {
 			return new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities());
-		}
-		return null;
+//		}
+//		return null;
 	}
 
 	@Override

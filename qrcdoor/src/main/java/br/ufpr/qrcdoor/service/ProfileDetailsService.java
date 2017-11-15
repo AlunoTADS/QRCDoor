@@ -13,14 +13,19 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.ufpr.qrcdoor.entity.Estrutura;
 import br.ufpr.qrcdoor.entity.Pessoa;
+import br.ufpr.qrcdoor.entity.RoleEnum;
+import br.ufpr.qrcdoor.repository.EstruturaRepository;
 import br.ufpr.qrcdoor.repository.PessoaRepository;
 
 @Service
 public class ProfileDetailsService implements UserDetailsService {
 	
 	@Autowired
-	private PessoaRepository repository;
+	private PessoaRepository pessoaRepository;
+	@Autowired
+	private EstruturaRepository estruturaRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -29,18 +34,27 @@ public class ProfileDetailsService implements UserDetailsService {
 	}
 	
 	public UserDetails loadUserByLoginAndPassword(String login, String senha) throws UsernameNotFoundException {
-		Pessoa profile = repository.loadProfile(login);
-
-		if (profile == null || !new BCryptPasswordEncoder().matches(senha, profile.getSenha())) {
-			throw new UsernameNotFoundException("Usuário e senha inválidos.");
-		}
-		
+		Estrutura estruturaProfile;
+		Pessoa pessoaProfile;
 		List<GrantedAuthority> grants = new ArrayList<GrantedAuthority>();
-		if (profile.getRole() != null) {
-			grants.add(new SimpleGrantedAuthority(profile.getRole().getValue()));
+		try {
+			estruturaProfile = this.estruturaRepository.findOne(Long.valueOf(login));
+			grants.add(new SimpleGrantedAuthority(RoleEnum.ESTRUTURA.getValue()));
+			if (!new BCryptPasswordEncoder().matches("ESTRUTURA." + login, senha)) {
+				throw new UsernameNotFoundException("Usuário e senha inválidos.");
+			}
+			return new User(estruturaProfile.getId().toString(), senha, grants);
+		} catch(Exception e) {
+			pessoaProfile = this.pessoaRepository.loadProfile(login);
+			if (pessoaProfile == null || !new BCryptPasswordEncoder().matches(senha, pessoaProfile.getSenha())) {
+				throw new UsernameNotFoundException("Usuário e senha inválidos.");
+			}
+			if (pessoaProfile.getRole() != null) {
+				grants.add(new SimpleGrantedAuthority(pessoaProfile.getRole().getValue()));
+			}
+			return new User(pessoaProfile.getLogin(), pessoaProfile.getSenha(), grants);
 		}
 		
-		return new User(profile.getLogin(), profile.getSenha(), grants);
 	}
 	
 }
