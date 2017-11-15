@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.ufpr.qrcdoor.entity.Pessoa;
 import br.ufpr.qrcdoor.service.PessoaService;
+import br.ufpr.qrcdoor.util.Util;
 
 @SuppressWarnings("rawtypes")
 @RestController
@@ -30,6 +31,7 @@ public class PessoaController {
 	
 	@GetMapping("/pessoas")
 	public Page<Pessoa> get(@RequestParam Map<String, String> query, Pageable pageable) throws Exception {
+		query = Util.cleanQueryMap(query);
 		Pessoa pessoa = new ObjectMapper().readValue(new ObjectMapper().writeValueAsString(query), Pessoa.class);
 		return this.pessoaService.find(pessoa, pageable);
 	}

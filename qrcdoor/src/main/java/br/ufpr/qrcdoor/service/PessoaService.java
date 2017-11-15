@@ -98,7 +98,7 @@ public class PessoaService extends GenericService<Pessoa, Long> {
 	}
 
 	public Pessoa changePassword(Pessoa pessoa) {
-		if (StringUtils.isEmpty(pessoa.getSenha())) {
+		if (StringUtils.isEmpty(pessoa.getSenha()) && pessoa.getId() != null) {
 			pessoa.setSenha(this.pessoaRepository.findOne(pessoa.getId()).getSenha());
 		} else {
 			pessoa.setSenha(passwordEncoder.encode(pessoa.getSenha()));

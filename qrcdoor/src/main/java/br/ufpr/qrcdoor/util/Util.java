@@ -3,6 +3,7 @@ package br.ufpr.qrcdoor.util;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.util.StringUtils;
 
@@ -26,6 +27,23 @@ public class Util {
         else {
             return "%" + searchTerm.toLowerCase() + "%";
         }
+    }
+    
+    public static Map<String, String> cleanQueryMap(Map<String, String> query) {
+    	Map<String, String> map = new HashMap<String, String>(query);
+    	try {
+    		map.remove("size");
+    	} catch(Exception e) {
+    	}
+    	try {
+    		map.remove("sort");
+    	} catch(Exception e) {
+    	}
+    	try {
+    		map.remove("page");    		
+    	} catch(Exception e) {
+    	}
+    	return map;
     }
 
 }
