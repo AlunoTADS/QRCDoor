@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.ufpr.qrcdoor.entity.Funcao;
 import br.ufpr.qrcdoor.service.FuncaoService;
+import br.ufpr.qrcdoor.util.Util;
 
 @SuppressWarnings("rawtypes")
 @RestController
@@ -30,6 +31,7 @@ public class FuncaoController {
 	
 	@GetMapping("/funcoes")
 	public Page<Funcao> get(@RequestParam Map<String, String> query, Pageable pageable) throws Exception {
+		query = Util.cleanQueryMap(query);
 		Funcao funcao = new ObjectMapper().readValue(new ObjectMapper().writeValueAsString(query), Funcao.class);
 		return this.funcaoService.find(funcao, pageable);
 	}

@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.ufpr.qrcdoor.entity.Estrutura;
 import br.ufpr.qrcdoor.service.EstruturaService;
+import br.ufpr.qrcdoor.util.Util;
 
 @SuppressWarnings("rawtypes")
 @RestController
@@ -32,6 +33,7 @@ public class EstruturaController {
 	@GetMapping("/estruturas")
 	@ResponseBody
 	public Page<Estrutura> get(@RequestParam Map<String, String> query, Pageable pageable) throws Exception {
+		query = Util.cleanQueryMap(query);
 		Estrutura estrutura = new ObjectMapper().readValue(new ObjectMapper().writeValueAsString(query), Estrutura.class);
 		return this.estruturaService.find(estrutura, pageable);
 	}
