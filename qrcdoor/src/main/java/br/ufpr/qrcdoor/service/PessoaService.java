@@ -4,40 +4,23 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import br.ufpr.qrcdoor.entity.Pessoa;
 import br.ufpr.qrcdoor.exception.BusinessException;
-import br.ufpr.qrcdoor.exception.ResourceNotFoundException;
 import br.ufpr.qrcdoor.repository.PessoaRepository;
-import br.ufpr.qrcdoor.specification.PessoaSpecification;
 import br.ufpr.qrcdoor.util.Util;
 
 @Service
-public class PessoaService {
+public class PessoaService extends GenericService<Pessoa, Long> {
 
 	@Autowired
 	PessoaRepository pessoaRepository;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
-	public Page<Pessoa> find(String query, Pageable pageable) throws Exception {
-		Specification<Pessoa> searchSpec = PessoaSpecification.searchContainsIgnoreCase(query);
-		return this.pessoaRepository.findAll(searchSpec, pageable);
-	}
-
-	public Pessoa findOne(Long id) throws Exception {
-		Pessoa pessoa = this.pessoaRepository.findOne(id);
-		if (pessoa == null) {
-			throw new ResourceNotFoundException();
-		}
-		return pessoa;
-	}
 
 	public Pessoa insert(Pessoa pessoa) throws Exception {
 		HashMap<String, List<String>> businessErrors = this.validateInsertBusinessRules(pessoa);
@@ -53,10 +36,6 @@ public class PessoaService {
 			throw new BusinessException("BusinessException", businessErrors);
 		}
 		return this.pessoaRepository.saveAndFlush(this.changePassword(pessoa));
-	}
-
-	public void delete(Long id) throws Exception {
-		this.pessoaRepository.delete(id);
 	}
 
 	public HashMap<String, List<String>> validateInsertBusinessRules(Pessoa pessoa) {
@@ -125,6 +104,11 @@ public class PessoaService {
 			pessoa.setSenha(passwordEncoder.encode(pessoa.getSenha()));
 		}
 		return pessoa;
+	}
+
+	@Override
+	public JpaRepository<Pessoa, Long> getRepository() {
+		return this.pessoaRepository;
 	}
 
 }

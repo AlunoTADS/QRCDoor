@@ -1,5 +1,7 @@
 package br.ufpr.qrcdoor.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,8 +29,9 @@ public class PessoaController {
 	private PessoaService pessoaService;
 	
 	@GetMapping("/pessoas")
-	public Page<Pessoa> get(@RequestParam(required=false, name="q") String query, Pageable pageable) throws Exception {
-		return this.pessoaService.find(query, pageable);
+	public Page<Pessoa> get(@RequestParam Map<String, String> query, Pageable pageable) throws Exception {
+		Pessoa pessoa = new ObjectMapper().readValue(new ObjectMapper().writeValueAsString(query), Pessoa.class);
+		return this.pessoaService.find(pessoa, pageable);
 	}
 
 	@GetMapping("/pessoa/{id}")
