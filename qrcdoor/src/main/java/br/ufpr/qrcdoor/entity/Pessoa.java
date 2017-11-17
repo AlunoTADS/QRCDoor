@@ -16,6 +16,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * The persistent class for the "Pessoa" database table.
  *
@@ -39,11 +41,13 @@ public class Pessoa implements Serializable {
     @Column(name = "fisicajuridica", length = 1, nullable = false)
     private String fisicaJuridica;
 
+    @JsonIgnore
     @Lob
     @Column(name = "foto")
     @Type(type = "org.hibernate.type.BinaryType")
     private byte[] foto;
 
+    @JsonIgnore
     @Column(name = "fotoextensao", length = 16)
     private String fotoExtensao;
 
