@@ -1,9 +1,5 @@
 package br.ufpr.qrcdoor.controller;
 
-import java.util.Map;
-
-import javax.annotation.security.PermitAll;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +20,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.ufpr.qrcdoor.entity.Pessoa;
 import br.ufpr.qrcdoor.service.PessoaService;
-import br.ufpr.qrcdoor.util.Util;
 
 @SuppressWarnings("rawtypes")
 @RestController
@@ -33,10 +28,9 @@ public class PessoaController {
 	@Autowired
 	private PessoaService pessoaService;
 	
-	@GetMapping("/pessoas")
-	public Page<Pessoa> get(@RequestParam Map<String, String> query, Pageable pageable) throws Exception {
-		query = Util.cleanQueryMap(query);
-		Pessoa pessoa = new ObjectMapper().readValue(new ObjectMapper().writeValueAsString(query), Pessoa.class);
+	@GetMapping("/pessoa")
+	public Page<Pessoa> get(@RequestParam(name="q") String query, Pageable pageable) throws Exception {
+		Pessoa pessoa = new ObjectMapper().readValue(query, Pessoa.class);
 		return this.pessoaService.find(pessoa, pageable);
 	}
 
@@ -57,22 +51,22 @@ public class PessoaController {
 		Pessoa pessoa = this.pessoaService.findOne(id);
 		pessoa.setFoto(file.getBytes());
 		this.pessoaService.update(pessoa);
-		return ResponseEntity.status(HttpStatus.OK).body(null);
+		return ResponseEntity.status(HttpStatus.OK).body("");
 	}
 	
-	@PostMapping("/pessoas")
+	@PostMapping("/pessoa")
 	public ResponseEntity post(@RequestBody String body) throws Exception {
 		Pessoa pessoa = new ObjectMapper().readValue(body, Pessoa.class);
 		return ResponseEntity.status(HttpStatus.OK).body(this.pessoaService.insert(pessoa));
 	}
 
-	@PutMapping("/pessoas")
+	@PutMapping("/pessoa")
 	public ResponseEntity put(@RequestBody String body) throws Exception {
 		Pessoa pessoa = new ObjectMapper().readValue(body, Pessoa.class);
 		return ResponseEntity.status(HttpStatus.OK).body(this.pessoaService.update(pessoa));
 	}
 
-	@DeleteMapping("/pessoas/{id}")
+	@DeleteMapping("/pessoa/{id}")
 	public ResponseEntity delete(@PathVariable Long id) throws Exception {
 		this.pessoaService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).body("");

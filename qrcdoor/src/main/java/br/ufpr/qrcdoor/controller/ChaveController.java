@@ -23,7 +23,7 @@ public class ChaveController {
 	@Autowired
 	private ChaveService chaveService;
 	
-	@GetMapping("/chaves")
+	@GetMapping("/chave")
 	public ResponseEntity get() throws Exception {
 		return ResponseEntity.status(HttpStatus.OK).body(this.chaveService.findAll());
 	}
@@ -33,19 +33,19 @@ public class ChaveController {
 		return ResponseEntity.status(HttpStatus.OK).body(this.chaveService.findOne(id));
 	}
 
-	@PostMapping("/chaves")
+	@PostMapping("/chave")
 	public ResponseEntity post(@RequestBody String body) throws Exception {
 		Chave chave = new ObjectMapper().readValue(body, Chave.class);
 		return ResponseEntity.status(HttpStatus.OK).body(this.chaveService.save(chave));
 	}
 
-	@PutMapping("/chaves")
+	@PutMapping("/chave")
 	public ResponseEntity put(@RequestBody String body) throws Exception {
 		Chave chave = new ObjectMapper().readValue(body, Chave.class);
 		return ResponseEntity.status(HttpStatus.OK).body(this.chaveService.save(chave));
 	}
 
-	@DeleteMapping("/chaves/{id}")
+	@DeleteMapping("/chave/{id}")
 	public ResponseEntity delete(@PathVariable Long id) throws Exception {
 		this.chaveService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).body("");

@@ -23,7 +23,7 @@ public class AmbienteController {
 	@Autowired
 	private AmbienteService ambienteService;
 	
-	@GetMapping("/ambientes")
+	@GetMapping("/ambiente")
 	public ResponseEntity get() throws Exception {
 		return ResponseEntity.status(HttpStatus.OK).body(this.ambienteService.findAll());
 	}
@@ -33,19 +33,19 @@ public class AmbienteController {
 		return ResponseEntity.status(HttpStatus.OK).body(this.ambienteService.findOne(id));
 	}
 
-	@PostMapping("/ambientes")
+	@PostMapping("/ambiente")
 	public ResponseEntity post(@RequestBody String body) throws Exception {
 		Ambiente ambiente = new ObjectMapper().readValue(body, Ambiente.class);
 		return ResponseEntity.status(HttpStatus.OK).body(this.ambienteService.save(ambiente));
 	}
 
-	@PutMapping("/ambientes")
+	@PutMapping("/ambiente")
 	public ResponseEntity put(@RequestBody String body) throws Exception {
 		Ambiente ambiente = new ObjectMapper().readValue(body, Ambiente.class);
 		return ResponseEntity.status(HttpStatus.OK).body(this.ambienteService.save(ambiente));
 	}
 
-	@DeleteMapping("/ambientes/{id}")
+	@DeleteMapping("/ambiente/{id}")
 	public ResponseEntity delete(@PathVariable Long id) throws Exception {
 		this.ambienteService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).body("");

@@ -1,7 +1,5 @@
 package br.ufpr.qrcdoor.controller;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +18,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.ufpr.qrcdoor.entity.Funcao;
 import br.ufpr.qrcdoor.service.FuncaoService;
-import br.ufpr.qrcdoor.util.Util;
 
 @SuppressWarnings("rawtypes")
 @RestController
@@ -29,10 +26,9 @@ public class FuncaoController {
 	@Autowired
 	private FuncaoService funcaoService;
 	
-	@GetMapping("/funcoes")
-	public Page<Funcao> get(@RequestParam Map<String, String> query, Pageable pageable) throws Exception {
-		query = Util.cleanQueryMap(query);
-		Funcao funcao = new ObjectMapper().readValue(new ObjectMapper().writeValueAsString(query), Funcao.class);
+	@GetMapping("/funcao")
+	public Page<Funcao> get(@RequestParam(name="q") String query, Pageable pageable) throws Exception {
+		Funcao funcao = new ObjectMapper().readValue(query, Funcao.class);
 		return this.funcaoService.find(funcao, pageable);
 	}
 
@@ -41,18 +37,18 @@ public class FuncaoController {
 		return ResponseEntity.status(HttpStatus.OK).body(this.funcaoService.findOne(id));
 	}
 
-	@PostMapping("/funcoes")
+	@PostMapping("/funcao")
 	public ResponseEntity post(@RequestBody String body) throws Exception {
 		Funcao funcao = new ObjectMapper().readValue(body, Funcao.class);
 		return ResponseEntity.status(HttpStatus.OK).body(this.funcaoService.save(funcao));
 	}
 
-	@PutMapping("/funcoes")	public ResponseEntity put(@RequestBody String body) throws Exception {
+	@PutMapping("/funcao")	public ResponseEntity put(@RequestBody String body) throws Exception {
 		Funcao funcao = new ObjectMapper().readValue(body, Funcao.class);
 		return ResponseEntity.status(HttpStatus.OK).body(this.funcaoService.save(funcao));
 	}
 
-	@DeleteMapping("/funcoes/{id}")
+	@DeleteMapping("/funcao/{id}")
 	public ResponseEntity delete(@PathVariable Long id) throws Exception {
 		this.funcaoService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).body("");

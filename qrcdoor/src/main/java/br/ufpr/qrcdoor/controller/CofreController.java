@@ -23,7 +23,7 @@ public class CofreController {
 	@Autowired
 	private CofreService cofreService;
 	
-	@GetMapping("/cofres")
+	@GetMapping("/cofre")
 	public ResponseEntity get() throws Exception {
 		return ResponseEntity.status(HttpStatus.OK).body(this.cofreService.findAll());
 	}
@@ -33,19 +33,19 @@ public class CofreController {
 		return ResponseEntity.status(HttpStatus.OK).body(this.cofreService.findOne(id));
 	}
 
-	@PostMapping("/cofres")
+	@PostMapping("/cofre")
 	public ResponseEntity post(@RequestBody String body) throws Exception {
 		Cofre cofre = new ObjectMapper().readValue(body, Cofre.class);
 		return ResponseEntity.status(HttpStatus.OK).body(this.cofreService.save(cofre));
 	}
 
-	@PutMapping("/cofres")
+	@PutMapping("/cofre")
 	public ResponseEntity put(@RequestBody String body) throws Exception {
 		Cofre cofre = new ObjectMapper().readValue(body, Cofre.class);
 		return ResponseEntity.status(HttpStatus.OK).body(this.cofreService.save(cofre));
 	}
 
-	@DeleteMapping("/cofres/{id}")
+	@DeleteMapping("/cofre/{id}")
 	public ResponseEntity delete(@PathVariable Long id) throws Exception {
 		this.cofreService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).body("");

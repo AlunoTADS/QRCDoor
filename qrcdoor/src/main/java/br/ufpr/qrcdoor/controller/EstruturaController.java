@@ -1,7 +1,5 @@
 package br.ufpr.qrcdoor.controller;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +19,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.ufpr.qrcdoor.entity.Estrutura;
 import br.ufpr.qrcdoor.service.EstruturaService;
-import br.ufpr.qrcdoor.util.Util;
 
 @SuppressWarnings("rawtypes")
 @RestController
@@ -30,11 +27,10 @@ public class EstruturaController {
 	@Autowired
 	private EstruturaService estruturaService;
 	
-	@GetMapping("/estruturas")
+	@GetMapping("/estrutura")
 	@ResponseBody
-	public Page<Estrutura> get(@RequestParam Map<String, String> query, Pageable pageable) throws Exception {
-		query = Util.cleanQueryMap(query);
-		Estrutura estrutura = new ObjectMapper().readValue(new ObjectMapper().writeValueAsString(query), Estrutura.class);
+	public Page<Estrutura> get(@RequestParam(name="q") String query, Pageable pageable) throws Exception {
+		Estrutura estrutura = new ObjectMapper().readValue(query, Estrutura.class);
 		return this.estruturaService.find(estrutura, pageable);
 	}
 
@@ -43,19 +39,19 @@ public class EstruturaController {
 		return ResponseEntity.status(HttpStatus.OK).body(this.estruturaService.findOne(id));
 	}
 
-	@PostMapping("/estruturas")
+	@PostMapping("/estrutura")
 	public ResponseEntity post(@RequestBody String body) throws Exception {
 		Estrutura estrutura = new ObjectMapper().readValue(body, Estrutura.class);
 		return ResponseEntity.status(HttpStatus.OK).body(this.estruturaService.save(estrutura));
 	}
 
-	@PutMapping("/estruturas")
+	@PutMapping("/estrutura")
 	public ResponseEntity put(@RequestBody String body) throws Exception {
 		Estrutura estrutura = new ObjectMapper().readValue(body, Estrutura.class);
 		return ResponseEntity.status(HttpStatus.OK).body(this.estruturaService.save(estrutura));
 	}
 
-	@DeleteMapping("/estruturas/{id}")
+	@DeleteMapping("/estrutura/{id}")
 	public ResponseEntity delete(@PathVariable Long id) throws Exception {
 		this.estruturaService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).body("");

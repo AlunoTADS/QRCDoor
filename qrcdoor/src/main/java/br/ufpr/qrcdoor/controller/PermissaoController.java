@@ -23,7 +23,7 @@ public class PermissaoController {
 	@Autowired
 	private PermissaoService permissaoService;
 	
-	@GetMapping("/permissoes")
+	@GetMapping("/permissao")
 	public ResponseEntity get() throws Exception {
 		return ResponseEntity.status(HttpStatus.OK).body(this.permissaoService.findAll());
 	}
@@ -33,19 +33,19 @@ public class PermissaoController {
 		return ResponseEntity.status(HttpStatus.OK).body(this.permissaoService.findOne(id));
 	}
 
-	@PostMapping("/permissoes")
+	@PostMapping("/permissao")
 	public ResponseEntity post(@RequestBody String body) throws Exception {
 		Permissao permissao = new ObjectMapper().readValue(body, Permissao.class);
 		return ResponseEntity.status(HttpStatus.OK).body(this.permissaoService.save(permissao));
 	}
 
-	@PutMapping("/permissoes")
+	@PutMapping("/permissao")
 	public ResponseEntity put(@RequestBody String body) throws Exception {
 		Permissao permissao = new ObjectMapper().readValue(body, Permissao.class);
 		return ResponseEntity.status(HttpStatus.OK).body(this.permissaoService.save(permissao));
 	}
 
-	@DeleteMapping("/permissoes/{id}")
+	@DeleteMapping("/permissao/{id}")
 	public ResponseEntity delete(@PathVariable Long id) throws Exception {
 		this.permissaoService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).body("");

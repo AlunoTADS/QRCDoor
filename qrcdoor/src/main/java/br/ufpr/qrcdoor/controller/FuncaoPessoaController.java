@@ -23,29 +23,29 @@ public class FuncaoPessoaController {
 	@Autowired
 	private FuncaoPessoaService funcaoPessoaService;
 	
-	@GetMapping("/funcaoPessoas")
+	@GetMapping("/funcao-pessoa")
 	public ResponseEntity get() throws Exception {
 		return ResponseEntity.status(HttpStatus.OK).body(this.funcaoPessoaService.findAll());
 	}
 
-	@GetMapping("/funcaoPessoa/{id}")
+	@GetMapping("/funcao-pessoa/{id}")
 	public ResponseEntity get(@PathVariable Long id) throws Exception {
 		return ResponseEntity.status(HttpStatus.OK).body(this.funcaoPessoaService.findOne(id));
 	}
 
-	@PostMapping("/funcaoPessoas")
+	@PostMapping("/funcao-pessoa")
 	public ResponseEntity post(@RequestBody String body) throws Exception {
 		FuncaoPessoa funcaoPessoa = new ObjectMapper().readValue(body, FuncaoPessoa.class);
 		return ResponseEntity.status(HttpStatus.OK).body(this.funcaoPessoaService.save(funcaoPessoa));
 	}
 
-	@PutMapping("/funcaoPessoas")
+	@PutMapping("/funcao-pessoa")
 	public ResponseEntity put(@RequestBody String body) throws Exception {
 		FuncaoPessoa funcaoPessoa = new ObjectMapper().readValue(body, FuncaoPessoa.class);
 		return ResponseEntity.status(HttpStatus.OK).body(this.funcaoPessoaService.save(funcaoPessoa));
 	}
 
-	@DeleteMapping("/funcaoPessoas/{id}")
+	@DeleteMapping("/funcao-pessoa/{id}")
 	public ResponseEntity delete(@PathVariable Long id) throws Exception {
 		this.funcaoPessoaService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).body("");

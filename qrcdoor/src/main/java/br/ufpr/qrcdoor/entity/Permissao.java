@@ -8,8 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -34,6 +32,9 @@ public class Permissao implements Serializable {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="permissao_idpermissao_seq")
 	@Column(name="idpermissao", unique=true, nullable=false)
 	private Long id;
+	
+	@Column(length=255)
+	private String descricao;
 
 	@Type(type="true_false")
 	@Column(nullable=false)
@@ -76,11 +77,6 @@ public class Permissao implements Serializable {
 	@Type(type="true_false")
 	@Column(nullable=false)
 	private Boolean monitora;
-
-	//bi-directional many-to-one association to Estrutura
-	@ManyToOne
-	@JoinColumn(name="idestrutura")
-	private Estrutura estrutura;
 
 	public Permissao() {
 	}
@@ -181,12 +177,12 @@ public class Permissao implements Serializable {
 		this.monitora = monitora;
 	}
 
-	public Estrutura getEstrutura() {
-		return this.estrutura;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setEstrutura(Estrutura estrutura) {
-		this.estrutura = estrutura;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 }

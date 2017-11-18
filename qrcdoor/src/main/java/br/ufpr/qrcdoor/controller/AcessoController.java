@@ -23,7 +23,7 @@ public class AcessoController {
 	@Autowired
 	private AcessoService acessoService;
 	
-	@GetMapping("/acessos")
+	@GetMapping("/acesso")
 	public ResponseEntity get() throws Exception {
 		return ResponseEntity.status(HttpStatus.OK).body(this.acessoService.findAll());
 	}
@@ -33,19 +33,19 @@ public class AcessoController {
 		return ResponseEntity.status(HttpStatus.OK).body(this.acessoService.findOne(id));
 	}
 
-	@PostMapping("/acessos")
+	@PostMapping("/acesso")
 	public ResponseEntity post(@RequestBody String body) throws Exception {
 		Acesso acesso = new ObjectMapper().readValue(body, Acesso.class);
 		return ResponseEntity.status(HttpStatus.OK).body(this.acessoService.save(acesso));
 	}
 
-	@PutMapping("/acessos")
+	@PutMapping("/acesso")
 	public ResponseEntity put(@RequestBody String body) throws Exception {
 		Acesso acesso = new ObjectMapper().readValue(body, Acesso.class);
 		return ResponseEntity.status(HttpStatus.OK).body(this.acessoService.save(acesso));
 	}
 
-	@DeleteMapping("/acessos/{id}")
+	@DeleteMapping("/acesso/{id}")
 	public ResponseEntity delete(@PathVariable Long id) throws Exception {
 		this.acessoService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).body("");
