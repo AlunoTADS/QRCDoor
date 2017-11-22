@@ -50,6 +50,10 @@ public class PessoaController {
 	public ResponseEntity foto(@PathVariable Long id, @RequestParam("file") MultipartFile file) throws Exception {
 		Pessoa pessoa = this.pessoaService.findOne(id);
 		pessoa.setFoto(file.getBytes());
+		
+		String name = file.getOriginalFilename();
+		pessoa.setFotoExtensao(name.substring(name.lastIndexOf(".") + 1));
+		
 		this.pessoaService.update(pessoa);
 		return ResponseEntity.status(HttpStatus.OK).body("");
 	}
