@@ -30,51 +30,52 @@ public class Pessoa implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @SequenceGenerator(name = "pessoa_idpessoa_seq", sequenceName = "pessoa_idpessoa_seq", allocationSize = 1, initialValue = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pessoa_idpessoa_seq")
-    @Column(name = "idpessoa", unique = true, nullable = false)
+    @SequenceGenerator(name="pessoa_idpessoa_seq", sequenceName="pessoa_idpessoa_seq", allocationSize=1, initialValue=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="pessoa_idpessoa_seq")
+    @Column(name="idpessoa", unique=true, nullable=false)
     private Long id;
 
-    @Column(length = 32)
+    @Column(length=32)
     private String documento;
-
-    @Column(name = "fisicajuridica", length = 1, nullable = false)
-    private String fisicaJuridica;
 
     @JsonIgnore
     @Lob
-    @Column(name = "foto")
-    @Type(type = "org.hibernate.type.BinaryType")
+    @Column(name="foto")
+    @Type(type="org.hibernate.type.BinaryType")
     private byte[] foto;
 
     @JsonIgnore
-    @Column(name = "fotoextensao", length = 16)
+    @Column(name="fotoextensao", length=16)
     private String fotoExtensao;
 
-    @Column(name = "nome", length = 255, nullable = false)
+    @Column(name="nome", length=255, nullable=false)
     private String nome;
 
-    @Column(name = "situacao", length = 1, nullable = false)
+    @Column(name="situacao", length=1, nullable=false)
     private String situacao;
 
-    @Column(name = "login", length = 32, unique = true)
+    @Column(name="login", length=32, unique=true)
     private String login;
 
-    @Column(name = "senha", length = 255)
+    @Column(name="senha", length=255)
     private String senha;
 
-    @Column(name = "email", length = 64)
+    @Column(name="email", length=64)
     private String email;
 
-    @Column(name = "telefonefixo", length = 64)
+    @Column(name="telefonefixo", length=64)
     private String telefoneFixo;
 
-    @Column(name = "telefonecelular", length = 64)
+    @Column(name="telefonecelular", length=64)
     private String telefoneCelular;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role", length = 32)
+    @Column(name="role", length=32)
     private RoleEnum role;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name="fisicajuridica", length=1, nullable=false)
+    private TipoPessoaEnum fisicaJuridica;
 
     public Pessoa() {
     }
@@ -134,14 +135,6 @@ public class Pessoa implements Serializable {
         this.documento = documento;
     }
 
-    public String getFisicaJuridica() {
-        return fisicaJuridica;
-    }
-
-    public void setFisicaJuridica(String fisicaJuridica) {
-        this.fisicaJuridica = fisicaJuridica;
-    }
-
     public String getLogin() {
         return login;
     }
@@ -189,5 +182,13 @@ public class Pessoa implements Serializable {
     public void setRole(RoleEnum role) {
         this.role = role;
     }
+
+	public TipoPessoaEnum getFisicaJuridica() {
+		return fisicaJuridica;
+	}
+
+	public void setFisicaJuridica(TipoPessoaEnum fisicaJuridica) {
+		this.fisicaJuridica = fisicaJuridica;
+	}
 
 }

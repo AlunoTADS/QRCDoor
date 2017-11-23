@@ -1,4 +1,4 @@
-package br.ufpr.qrcdoor.entity;
+	package br.ufpr.qrcdoor.entity;
 
 public enum RoleEnum {
 	

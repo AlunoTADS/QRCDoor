@@ -21,11 +21,11 @@ public class PermissaoPessoa implements Serializable {
 	private Long id;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="datafim", nullable=false)
+	@Column(name="datafim")
 	private Date dataFim;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="datainicio", nullable=false)
+	@Column(name="datainicio")
 	private Date dataInicio;
 
 	//bi-directional many-to-one association to Permissao

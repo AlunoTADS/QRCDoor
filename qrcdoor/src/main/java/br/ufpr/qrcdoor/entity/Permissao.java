@@ -41,14 +41,14 @@ public class Permissao implements Serializable {
 	private Boolean abre;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="datafim", nullable=false)
+	@Column(name="datafim")
 	private Date dataFim;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="datainicio", nullable=false)
+	@Column(name="datainicio")
 	private Date dataInicio;
 
-	@Column(name="diassemana", length=7, nullable=false)
+	@Column(name="diassemana", length=7)
 	private String diasSemana;
 
 	@Type(type="true_false")
@@ -64,14 +64,14 @@ public class Permissao implements Serializable {
 	private Boolean herda;
 
 	@Temporal(TemporalType.TIME)
-	@Column(name="horafim", nullable=false)
+	@Column(name="horafim")
 	private Date horaFim;
 
 	@Temporal(TemporalType.TIME)
-	@Column(name="horainicio", nullable=false)
+	@Column(name="horainicio")
 	private Date horaInicio;
 
-	@Column(length=12, nullable=false)
+	@Column(length=12)
 	private String meses;
 
 	@Type(type="true_false")
