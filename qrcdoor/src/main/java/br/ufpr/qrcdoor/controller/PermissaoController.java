@@ -24,10 +24,11 @@ public class PermissaoController {
 	private PermissaoService permissaoService;
 	
 	@GetMapping("/permissao")
-	public ResponseEntity get() throws Exception {
-		return ResponseEntity.status(HttpStatus.OK).body(this.permissaoService.findAll());
+	public Page<Permissao> get(@RequestParam(name="q") String query, Pageable pageable) throws Exception {
+		Permissao permissao = new ObjectMapper().readValue(query, Permissao.class);
+		return this.permissaoService.find(permissao, pageable);
 	}
-
+	
 	@GetMapping("/permissao/{id}")
 	public ResponseEntity get(@PathVariable Long id) throws Exception {
 		return ResponseEntity.status(HttpStatus.OK).body(this.permissaoService.findOne(id));
