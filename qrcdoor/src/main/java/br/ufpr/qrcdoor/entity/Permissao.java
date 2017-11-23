@@ -63,13 +63,11 @@ public class Permissao implements Serializable {
 	@Column(nullable=false)
 	private Boolean herda;
 
-	@Temporal(TemporalType.TIME)
 	@Column(name="horafim")
-	private Date horaFim;
+	private String horaFim;
 
-	@Temporal(TemporalType.TIME)
 	@Column(name="horainicio")
-	private Date horaInicio;
+	private String horaInicio;
 
 	@Column(length=12)
 	private String meses;
