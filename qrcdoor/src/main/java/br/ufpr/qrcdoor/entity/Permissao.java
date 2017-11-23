@@ -143,19 +143,19 @@ public class Permissao implements Serializable {
 		this.herda = herda;
 	}
 
-	public Date getHoraFim() {
+	public String getHoraFim() {
 		return this.horaFim;
 	}
 
-	public void setHoraFim(Date horaFim) {
+	public void setHoraFim(String horaFim) {
 		this.horaFim = horaFim;
 	}
 
-	public Date getHoraInicio() {
+	public String getHoraInicio() {
 		return this.horaInicio;
 	}
 
-	public void setHoraInicio(Date horaInicio) {
+	public void setHoraInicio(String horaInicio) {
 		this.horaInicio = horaInicio;
 	}
 
