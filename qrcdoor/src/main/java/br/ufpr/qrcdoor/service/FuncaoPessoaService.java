@@ -1,38 +1,25 @@
 package br.ufpr.qrcdoor.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import br.ufpr.qrcdoor.entity.FuncaoPessoa;
-import br.ufpr.qrcdoor.exception.ResourceNotFoundException;
 import br.ufpr.qrcdoor.repository.FuncaoPessoaRepository;
 
 @Service
-public class FuncaoPessoaService {
+public class FuncaoPessoaService extends GenericService<FuncaoPessoa, Long> {
 	
 	@Autowired
 	FuncaoPessoaRepository funcaoPessoaRepository;
-	
-	public List<FuncaoPessoa> findAll() throws Exception {
-		return this.funcaoPessoaRepository.findAll();
-	}
-	
-	public FuncaoPessoa findOne(Long id) throws Exception {
-		FuncaoPessoa funcaoPessoa = this.funcaoPessoaRepository.findOne(id);
-		if (funcaoPessoa == null) {
-			throw new ResourceNotFoundException();
-		}
-		return funcaoPessoa;
-	}
 	
 	public FuncaoPessoa save(FuncaoPessoa funcaoPessoa) throws Exception {
 		return this.funcaoPessoaRepository.saveAndFlush(funcaoPessoa);
 	}
 	
-	public void delete(Long id) throws Exception {
-		this.funcaoPessoaRepository.delete(id);
+	@Override
+	public JpaRepository<FuncaoPessoa, Long> getRepository() {
+		return funcaoPessoaRepository;
 	}
 
 }
