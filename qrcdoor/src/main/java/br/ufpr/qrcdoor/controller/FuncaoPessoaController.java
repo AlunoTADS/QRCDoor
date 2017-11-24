@@ -26,7 +26,7 @@ public class FuncaoPessoaController {
 	@Autowired
 	private FuncaoPessoaService funcaoPessoaService;
 	
-	@GetMapping("/funcao")
+	@GetMapping("/funcao-pessoa")
 	public Page<FuncaoPessoa> get(@RequestParam(name="q") String query, Pageable pageable) throws Exception {
 		FuncaoPessoa funcaoPessoa = new ObjectMapper().readValue(query, FuncaoPessoa.class);
 		return this.funcaoPessoaService.find(funcaoPessoa, pageable);
