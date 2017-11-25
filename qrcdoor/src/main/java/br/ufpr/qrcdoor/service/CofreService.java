@@ -1,38 +1,25 @@
 package br.ufpr.qrcdoor.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import br.ufpr.qrcdoor.entity.Cofre;
-import br.ufpr.qrcdoor.exception.ResourceNotFoundException;
 import br.ufpr.qrcdoor.repository.CofreRepository;
 
 @Service
-public class CofreService {
+public class CofreService extends GenericService<Cofre, Long> {
 	
 	@Autowired
 	CofreRepository cofreRepository;
-	
-	public List<Cofre> findAll() throws Exception {
-		return this.cofreRepository.findAll();
-	}
-	
-	public Cofre findOne(Long id) throws Exception {
-		Cofre cofre = this.cofreRepository.findOne(id);
-		if (cofre == null) {
-			throw new ResourceNotFoundException();
-		}
-		return cofre;
-	}
-	
+		
 	public Cofre save(Cofre cofre) throws Exception {
 		return this.cofreRepository.saveAndFlush(cofre);
 	}
-	
-	public void delete(Long id) throws Exception {
-		this.cofreRepository.delete(id);
-	}
 
+	@Override
+	public JpaRepository<Cofre, Long> getRepository() {
+		return this.cofreRepository;
+	}
+	
 }

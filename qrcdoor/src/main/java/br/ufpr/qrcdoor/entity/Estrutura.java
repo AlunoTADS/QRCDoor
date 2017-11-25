@@ -14,7 +14,10 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -36,7 +39,10 @@ public class Estrutura implements Serializable {
 	@Column(length=255, nullable=false)
 	private String descricao;
 
-	@Lob
+	@JsonIgnore
+    @Lob
+    @Column(name="foto")
+    @Type(type="org.hibernate.type.BinaryType")
 	private byte[] foto;
 
 	@Column(name="fotoextensao", length=16)
