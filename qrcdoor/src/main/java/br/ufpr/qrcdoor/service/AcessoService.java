@@ -16,11 +16,11 @@ public class AcessoService extends GenericService<Acesso, Long> {
 	@Autowired
 	AcessoRepository acessoRepository;
 	@Autowired
-	PessoaRepository pessoaRepository;
+	PermissaoFuncaoRepository permissaoFuncaoRepository;
 	@Autowired
 	PermissaoPessoaRepository permissaoPessoaRepository;
 	@Autowired
-	PermissaoFuncaoRepository permissaoFuncaoRepository;
+	PessoaRepository pessoaRepository;
 	
 	public Acesso save(Acesso acesso) throws Exception {
 		

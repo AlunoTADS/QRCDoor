@@ -13,7 +13,7 @@ import org.springframework.web.socket.handler.WebSocketHandlerDecorator;
 public class WebSocketSessionCapturingHandlerDecorator extends WebSocketHandlerDecorator {
 
 	private static final Logger logger = LoggerFactory.getLogger(WebSocketSessionCapturingHandlerDecorator.class);
-	private static HashMap<String, String> estruturasLogadas;
+	public static HashMap<String, WebSocketSession> estruturasConectadas;
 
 	public WebSocketSessionCapturingHandlerDecorator(WebSocketHandler delegate) {
 		super(delegate);
@@ -22,13 +22,13 @@ public class WebSocketSessionCapturingHandlerDecorator extends WebSocketHandlerD
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		logger.info("afterConnectionEstablished");
 		super.afterConnectionEstablished(session);
-		estruturasLogadas.put(session.getPrincipal().getName(), session.getId());
+		estruturasConectadas.put(session.getPrincipal().getName(), session);
 	}
 	
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
 		logger.info("afterConnectionClosed");
 		super.afterConnectionClosed(session, closeStatus);
-		estruturasLogadas.remove(session.getPrincipal().getName());
+		estruturasConectadas.remove(session.getPrincipal().getName());
 	}
 
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {

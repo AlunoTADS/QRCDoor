@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.ufpr.qrcdoor.entity.PermissaoEstrutura;
-import br.ufpr.qrcdoor.entity.PermissaoEstrutura.PermissaoEstruturaID;
+import br.ufpr.qrcdoor.entity.PermissaoEstrutura.PermissaoEstruturaPK;
 import br.ufpr.qrcdoor.service.PermissaoEstruturaService;
 
 @SuppressWarnings("rawtypes")
@@ -35,7 +35,7 @@ public class PermissaoEstruturaController {
 
 	@GetMapping("/permissao-estrutura/{idPermissao}/{idEstrutura}")
 	public ResponseEntity get(@PathVariable Long idPermissao, @PathVariable Long idEstrutura) throws Exception {
-		PermissaoEstruturaID id = new PermissaoEstruturaID(idPermissao, idEstrutura);
+		PermissaoEstruturaPK id = new PermissaoEstruturaPK(idPermissao, idEstrutura);
 		return ResponseEntity.status(HttpStatus.OK).body(this.permissaoEstruturaService.findOne(id));
 	}
 
@@ -53,7 +53,7 @@ public class PermissaoEstruturaController {
 
 	@DeleteMapping("/permissao-estrutura/{idPermissao}/{idEstrutura}")
 	public ResponseEntity delete(@PathVariable Long idPermissao, @PathVariable Long idEstrutura) throws Exception {
-		PermissaoEstruturaID id = new PermissaoEstruturaID(idPermissao, idEstrutura);
+		PermissaoEstruturaPK id = new PermissaoEstruturaPK(idPermissao, idEstrutura);
 		this.permissaoEstruturaService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).body("");
 	}
