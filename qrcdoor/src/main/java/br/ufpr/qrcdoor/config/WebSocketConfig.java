@@ -8,7 +8,7 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 import br.ufpr.qrcdoor.interceptor.HttpSessionIdHandshakeInterceptor;
-import br.ufpr.qrcdoor.ws.WebSocketMessageHandler;
+import br.ufpr.qrcdoor.websocket.WebSocketMessageHandler;
 
 @Configuration
 @EnableWebSocket

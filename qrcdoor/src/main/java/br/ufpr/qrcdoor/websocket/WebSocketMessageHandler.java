@@ -1,4 +1,4 @@
-package br.ufpr.qrcdoor.ws;
+package br.ufpr.qrcdoor.websocket;
 
 import java.io.IOException;
 

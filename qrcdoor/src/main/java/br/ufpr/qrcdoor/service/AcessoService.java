@@ -1,38 +1,35 @@
 package br.ufpr.qrcdoor.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import br.ufpr.qrcdoor.entity.Acesso;
-import br.ufpr.qrcdoor.exception.ResourceNotFoundException;
 import br.ufpr.qrcdoor.repository.AcessoRepository;
+import br.ufpr.qrcdoor.repository.PermissaoFuncaoRepository;
+import br.ufpr.qrcdoor.repository.PermissaoPessoaRepository;
+import br.ufpr.qrcdoor.repository.PessoaRepository;
 
 @Service
-public class AcessoService {
+public class AcessoService extends GenericService<Acesso, Long> {
 	
 	@Autowired
 	AcessoRepository acessoRepository;
-	
-	public List<Acesso> findAll() throws Exception {
-		return this.acessoRepository.findAll();
-	}
-	
-	public Acesso findOne(Long id) throws Exception {
-		Acesso acesso = this.acessoRepository.findOne(id);
-		if (acesso == null) {
-			throw new ResourceNotFoundException();
-		}
-		return acesso;
-	}
+	@Autowired
+	PessoaRepository pessoaRepository;
+	@Autowired
+	PermissaoPessoaRepository permissaoPessoaRepository;
+	@Autowired
+	PermissaoFuncaoRepository permissaoFuncaoRepository;
 	
 	public Acesso save(Acesso acesso) throws Exception {
+		
 		return this.acessoRepository.saveAndFlush(acesso);
 	}
-	
-	public void delete(Long id) throws Exception {
-		this.acessoRepository.delete(id);
-	}
 
+	@Override
+	public JpaRepository<Acesso, Long> getRepository() {
+		return this.acessoRepository;
+	}
+	
 }

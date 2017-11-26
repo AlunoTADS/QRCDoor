@@ -1,5 +1,7 @@
 package br.ufpr.qrcdoor.interceptor;
 
+import java.util.HashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.CloseStatus;
@@ -11,6 +13,7 @@ import org.springframework.web.socket.handler.WebSocketHandlerDecorator;
 public class WebSocketSessionCapturingHandlerDecorator extends WebSocketHandlerDecorator {
 
 	private static final Logger logger = LoggerFactory.getLogger(WebSocketSessionCapturingHandlerDecorator.class);
+	private static HashMap<String, String> estruturasLogadas;
 
 	public WebSocketSessionCapturingHandlerDecorator(WebSocketHandler delegate) {
 		super(delegate);
@@ -19,6 +22,13 @@ public class WebSocketSessionCapturingHandlerDecorator extends WebSocketHandlerD
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		logger.info("afterConnectionEstablished");
 		super.afterConnectionEstablished(session);
+		estruturasLogadas.put(session.getPrincipal().getName(), session.getId());
+	}
+	
+	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
+		logger.info("afterConnectionClosed");
+		super.afterConnectionClosed(session, closeStatus);
+		estruturasLogadas.remove(session.getPrincipal().getName());
 	}
 
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
@@ -31,8 +41,4 @@ public class WebSocketSessionCapturingHandlerDecorator extends WebSocketHandlerD
 		super.handleTransportError(session, exception);
 	}
 
-	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
-		logger.info("afterConnectionClosed");
-		super.afterConnectionClosed(session, closeStatus);
-	}
 }
