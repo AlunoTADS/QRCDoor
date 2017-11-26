@@ -22,10 +22,16 @@ public class CofreService extends GenericService<Cofre, Long> {
 	}
 	
 	public Cofre changePassword(Cofre cofre) {
+		Cofre old = this.cofreRepository.findOne(cofre.getId());
 		if (StringUtils.isEmpty(cofre.getSenha()) && cofre.getId() != null) {
-			cofre.setSenha(this.cofreRepository.findOne(cofre.getId()).getSenha());
+			cofre.setSenha(old.getSenha());
 		} else {
 			cofre.setSenha(passwordEncoder.encode(cofre.getSenha()));
+		}
+		if (StringUtils.isEmpty(cofre.getPin()) && cofre.getId() != null) {
+			cofre.setPin(old.getPin());
+		} else {
+			cofre.setPin(passwordEncoder.encode(cofre.getPin()));
 		}
 		return cofre;
 	}

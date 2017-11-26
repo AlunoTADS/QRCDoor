@@ -58,6 +58,9 @@ public class Estrutura implements Serializable {
 
 	@Column(name="tempomaximoabertura", nullable=false)
 	private Integer tempoMaximoAbertura;
+	
+	@Column(length=255)
+	private String senha;
 
 	public Estrutura() {
 	}
@@ -118,4 +121,12 @@ public class Estrutura implements Serializable {
 		this.tempoMaximoAbertura = tempoMaximoAbertura;
 	}
 
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
 }
