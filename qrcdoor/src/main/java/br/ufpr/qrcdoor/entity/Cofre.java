@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Cofre extends Estrutura implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Column(length=64)
+	@Column(length=255)
 	private String senha;
 
 	public Cofre() {
