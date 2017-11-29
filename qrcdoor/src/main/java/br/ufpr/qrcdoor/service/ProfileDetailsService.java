@@ -40,10 +40,10 @@ public class ProfileDetailsService implements UserDetailsService {
 		try {
 			estruturaProfile = this.estruturaRepository.findOne(Long.valueOf(login));
 			grants.add(new SimpleGrantedAuthority(RoleEnum.ESTRUTURA.getValue()));
-			if (!new BCryptPasswordEncoder().matches("ESTRUTURA." + login, senha)) {
+			if (estruturaProfile == null || !new BCryptPasswordEncoder().matches(senha, estruturaProfile.getSenha())) {
 				throw new UsernameNotFoundException("Usuário e senha inválidos.");
 			}
-			return new User(estruturaProfile.getId().toString(), senha, grants);
+			return new User(estruturaProfile.getId().toString(), estruturaProfile.getSenha(), grants);
 		} catch(Exception e) {
 			pessoaProfile = this.pessoaRepository.loadProfile(login);
 			if (pessoaProfile == null || !new BCryptPasswordEncoder().matches(senha, pessoaProfile.getSenha())) {

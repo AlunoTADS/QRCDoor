@@ -63,10 +63,10 @@ public class Permissao implements Serializable {
 	@Column(nullable=false)
 	private Boolean herda;
 
-	@Column(name="horafim")
+	@Column(name="horafim", length=8)
 	private String horaFim;
 
-	@Column(name="horainicio")
+	@Column(name="horainicio", length=8)
 	private String horaInicio;
 
 	@Column(length=12)

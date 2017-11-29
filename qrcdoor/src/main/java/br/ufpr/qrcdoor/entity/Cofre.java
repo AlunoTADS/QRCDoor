@@ -14,18 +14,18 @@ import javax.persistence.*;
 public class Cofre extends Estrutura implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Column(length=64)
-	private String senha;
+	@Column(length=255)
+	private String pin;
 
 	public Cofre() {
 	}
 
-	public String getSenha() {
-		return senha;
+	public String getPin() {
+		return pin;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setPin(String pin) {
+		this.pin = pin;
 	}
 
 }
