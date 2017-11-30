@@ -1,5 +1,7 @@
 package br.ufpr.qrcdoor.controller;
 
+import static br.ufpr.qrcdoor.interceptor.WebSocketSessionCapturingHandlerDecorator.estruturasConectadas;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +30,11 @@ public class EstruturaController {
 	
 	@Autowired
 	private EstruturaService estruturaService;
+	
+	@GetMapping("/estrutura/status/{id}")
+	public ResponseEntity status(@PathVariable String id) throws Exception {
+		return ResponseEntity.status(HttpStatus.OK).body(estruturasConectadas.containsKey(id));
+	}
 	
 	@GetMapping("/estrutura")
 	@ResponseBody
