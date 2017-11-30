@@ -8,6 +8,7 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 import br.ufpr.qrcdoor.interceptor.HttpSessionIdHandshakeInterceptor;
+import br.ufpr.qrcdoor.interceptor.WebSocketSessionCapturingHandlerDecorator;
 import br.ufpr.qrcdoor.websocket.WebSocketMessageHandler;
 
 @Configuration
@@ -24,7 +25,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Bean
     public WebSocketHandler messageHandler() {
-        return new WebSocketMessageHandler();
+//        return new WebSocketMessageHandler();
+        return new WebSocketSessionCapturingHandlerDecorator(new WebSocketMessageHandler());
     }
     
 	@Bean
