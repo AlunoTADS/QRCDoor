@@ -35,7 +35,7 @@ public class PessoaService extends GenericService<Pessoa, Long> {
 		if (businessErrors.size() > 0) {
 			throw new BusinessException("BusinessException", businessErrors);
 		}
-		return this.pessoaRepository.saveAndFlush(this.changePassword(pessoa));
+		return this.pessoaRepository.saveAndFlush(this.changeFoto(this.changePassword(pessoa)));
 	}
 
 	public HashMap<String, List<String>> validateInsertBusinessRules(Pessoa pessoa) {
@@ -75,6 +75,7 @@ public class PessoaService extends GenericService<Pessoa, Long> {
 						"Login já existente no sistema, aplique outro e tente novamente.");
 			}
 		}
+		
 		// Valida se documento é único
 		if (!pessoa.getDocumento().equals(oldPessoa.getDocumento())) {
 			if (this.pessoaRepository.findByDocumento(pessoa.getDocumento()) != null) {
@@ -106,6 +107,13 @@ public class PessoaService extends GenericService<Pessoa, Long> {
 		return pessoa;
 	}
 
+	public Pessoa changeFoto(Pessoa pessoa) {
+		if (pessoa.getFoto() == null && pessoa.getId() != null) {
+			pessoa.setFoto(this.pessoaRepository.findOne(pessoa.getId()).getFoto());
+		}
+		return pessoa;
+	}
+	
 	@Override
 	public JpaRepository<Pessoa, Long> getRepository() {
 		return this.pessoaRepository;
