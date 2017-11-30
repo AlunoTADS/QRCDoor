@@ -1,4 +1,4 @@
-# QRCDoor
+# QRC Door
 
 Sistema de controle de acesso utilizando QR code. Mains informações ver site do [GEPTA - UFPR](http://gepta.weebly.com/qrc-door.html).
 
