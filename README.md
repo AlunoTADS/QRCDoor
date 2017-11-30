@@ -1,10 +1,6 @@
 # QRCDoor
 
-One Paragraph of project description goes here
-
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+Sistema de controle de acesso utilizando QR code
 
 ### Prerequisitos
 
@@ -21,7 +17,7 @@ Executar o .jar pelo comando
 java -jar qrc-door.jar
 ```
 
-## Deployment
+## Compilação
 
 Para compilar o software executar o comando
 ```
