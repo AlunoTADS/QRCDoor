@@ -19,13 +19,19 @@ public class ChaveService extends GenericService<Chave, Long> {
 	@Autowired
 	PessoaRepository pessoaRepository;
 	
-	public Chave register(String username) throws Exception {
+	public Chave register(Chave chave, String username) throws Exception {
 		Pessoa pessoa = this.pessoaRepository.findByLogin(username);
-		Chave chave = new Chave();
-		chave.setPessoa(pessoa);
-		chave.setSituacao("I");
-		chave.setAssinatura(UUID.randomUUID().toString());
-		return this.chaveRepository.saveAndFlush(chave);
+		if (chave != null && chave.getId() != null && chave.getAssinatura() != null) {
+			Chave oldChave = this.chaveRepository.findOne(chave.getId());
+			if (oldChave != null && oldChave.getAssinatura().equals(chave.getAssinatura())) {
+				return oldChave;
+			}
+		}
+		Chave newChave = new Chave();
+		newChave.setPessoa(pessoa);
+		newChave.setSituacao("I");
+		newChave.setAssinatura(UUID.randomUUID().toString());
+		return this.chaveRepository.saveAndFlush(newChave);
 	}
 	
 	public Chave save(Chave chave) throws Exception {

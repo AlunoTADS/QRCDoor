@@ -1,5 +1,6 @@
 package br.ufpr.qrcdoor.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -52,10 +53,10 @@ public class EstruturaService extends GenericService<Estrutura, Long> {
 				+"	AND PE.IDESTRUTURA = :idestrutura "
 				+"	AND PPP.ABRE = 'T' "
 				+"	AND CURRENT_DATE BETWEEN COALESCE(PPP.DATAINICIO, CURRENT_DATE) AND COALESCE(PPP.DATAFIM, CURRENT_DATE) "
-				+"	AND SUBSTR(PPP.MESES, CAST(TO_CHAR(CURRENT_DATE, 'MM') AS INTEGER), 1) = 'T' "
-				+"	AND SUBSTR(PPP.DIASSEMANA, CAST(TO_CHAR(CURRENT_DATE, 'D') AS INTEGER), 1) = 'T' "
+				+"	AND SUBSTR(PPP.MESES, CAST(TO_CHAR(CURRENT_DATE, 'MM') AS INTEGER), 1) = '1' "
+				+"	AND SUBSTR(PPP.DIASSEMANA, CAST(TO_CHAR(CURRENT_DATE, 'D') AS INTEGER), 1) = '1' "
 				+"	AND :now BETWEEN COALESCE(PPP.HORAINICIO, '00:00') AND COALESCE(PPP.HORAFIM, '23:59') "
-				+"UNION ALL "
+				+"UNION "
 				+"SELECT 1 "
 				+"FROM "
 				+"	CHAVE C "
@@ -70,8 +71,8 @@ public class EstruturaService extends GenericService<Estrutura, Long> {
 				+"	AND PE.IDESTRUTURA = :idestrutura "
 				+"	AND PPP.ABRE = 'T' "
 				+"	AND CURRENT_DATE BETWEEN COALESCE(PPP.DATAINICIO, CURRENT_DATE) AND COALESCE(PPP.DATAFIM, CURRENT_DATE) "
-				+"	AND SUBSTR(PPP.MESES, CAST(TO_CHAR(CURRENT_DATE, 'MM') AS INTEGER), 1) = 'T' "
-				+"	AND SUBSTR(PPP.DIASSEMANA, CAST(TO_CHAR(CURRENT_DATE, 'D') AS INTEGER), 1) = 'T' "
+				+"	AND SUBSTR(PPP.MESES, CAST(TO_CHAR(CURRENT_DATE, 'MM') AS INTEGER), 1) = '1' "
+				+"	AND SUBSTR(PPP.DIASSEMANA, CAST(TO_CHAR(CURRENT_DATE, 'D') AS INTEGER), 1) = '1' "
 				+"	AND :now BETWEEN COALESCE(PPP.HORAINICIO, '00:00') AND COALESCE(PPP.HORAFIM, '23:59')";
 		
 		List<Integer> result;
@@ -99,8 +100,8 @@ public class EstruturaService extends GenericService<Estrutura, Long> {
 				+"	INNER JOIN ESTRUTURA E ON E.IDESTRUTURA = PE.IDESTRUTURA "
 				+"WHERE "
 				+"	PPP.ABRE = 'T' "
-				+"	AND P.IDPESSOA = :idpessoa"
-				+"UNION ALL "
+				+"	AND P.IDPESSOA = :idpessoa "
+				+"UNION "
 				+"SELECT E.* "
 				+"FROM "
 				+"	CHAVE C "
@@ -113,11 +114,17 @@ public class EstruturaService extends GenericService<Estrutura, Long> {
 				+"WHERE "
 				+"	PPP.ABRE = 'T' "
 				+"	AND P.IDPESSOA = :idpessoa";
-		List<Estrutura> result;
+		List<Estrutura> result = new ArrayList<>();
+		List<Map<String, Object>> rows;
 		try {
-			result = (List<Estrutura>) namedParameterJdbcTemplate.queryForList(sql, parameters, Estrutura.class);	
+			rows = (List<Map<String, Object>>) namedParameterJdbcTemplate.queryForList(sql, parameters);
+			for (Map<String, Object> row: rows) {
+				Estrutura estrutura = new Estrutura();
+				estrutura.setId((Long)row.get("idestrutura"));
+				estrutura.setDescricao((String)row.get("descricao"));
+				result.add(estrutura);
+			}
 		} catch(EmptyResultDataAccessException e) {
-			result = null;
 		}
 		
 		return result;
