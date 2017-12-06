@@ -16,6 +16,18 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 public class ExceptionHandlerAdvice {
 
 	private static final Logger log = Logger.getLogger(ExceptionHandlerAdvice.class);
+	
+	@ExceptionHandler(AcessoUnauthorizedException.class)
+	public ResponseEntity handleException(AcessoUnauthorizedException e) {
+		log.error(e);
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Acesso negado.");
+	}
+
+	@ExceptionHandler(EstruturaNotConnectedException.class)
+	public ResponseEntity handleException(EstruturaNotConnectedException e) {
+		log.error(e);
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("A estrutura não está conectada.");
+	}
 
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity handleException(ResourceNotFoundException e) {
@@ -23,18 +35,18 @@ public class ExceptionHandlerAdvice {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 				.body("O recurso informado na requisição não foi encontrado.");
 	}
-	
+
 	@ExceptionHandler(BusinessException.class)
 	public ResponseEntity handleBusinessException(BusinessException e) {
 		log.error(e);
-		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-				.body(e.getErrors());
+		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getErrors());
 	}
 
 	@ExceptionHandler({ JsonParseException.class, JsonMappingException.class, IOException.class })
 	public ResponseEntity handleParseException(Exception e) {
 		log.error(e);
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Parâmetros inválidos. Verifique os parâmetros e tente novamente.");
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+				.body("Parâmetros inválidos. Verifique os parâmetros e tente novamente.");
 	}
 
 	@ExceptionHandler(Exception.class)

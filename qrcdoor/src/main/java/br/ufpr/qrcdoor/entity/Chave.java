@@ -41,7 +41,7 @@ public class Chave implements Serializable {
 	@Column(name="datainicio")
 	private Date dataInicio;
 
-	@Column(length=255, nullable=false)
+	@Column(length=255)
 	private String descricao;
 
 	@Column(length=1, nullable=false)
