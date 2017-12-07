@@ -55,14 +55,17 @@ public class EstruturaController {
 	public ResponseEntity foto(@PathVariable Long id) throws Exception {
 		Estrutura estrutura = this.estruturaService.findOne(id);
 		MediaType mediaType;
+		byte[] foto;
 		if (estrutura.getFoto() != null) {
 			mediaType = (estrutura.getFotoExtensao().equals("png")) ? MediaType.IMAGE_PNG : MediaType.IMAGE_JPEG;
+			foto = estrutura.getFoto();
 		} else {
-			InputStream foto = EstruturaController.class.getClassLoader().getResourceAsStream("img/lock.png");
-			estrutura.setFoto(IOUtils.toByteArray(foto));
+			InputStream inputStream = EstruturaController.class.getClassLoader().getResourceAsStream("img/lock.png");
+			foto = IOUtils.toByteArray(inputStream);
+			inputStream.close();
 			mediaType = MediaType.IMAGE_PNG;
 		}
-		return ResponseEntity.status(HttpStatus.OK).contentType(mediaType).body(estrutura.getFoto());
+		return ResponseEntity.status(HttpStatus.OK).contentType(mediaType).body(foto);
 	}
 	
 	@PutMapping("/estrutura/foto/{id}")

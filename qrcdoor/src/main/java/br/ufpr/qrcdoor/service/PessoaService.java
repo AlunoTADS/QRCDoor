@@ -110,6 +110,7 @@ public class PessoaService extends GenericService<Pessoa, Long> {
 	public Pessoa changeFoto(Pessoa pessoa) {
 		if (pessoa.getFoto() == null && pessoa.getId() != null) {
 			pessoa.setFoto(this.pessoaRepository.findOne(pessoa.getId()).getFoto());
+			pessoa.setFotoExtensao(this.pessoaRepository.findOne(pessoa.getId()).getFotoExtensao());
 		}
 		return pessoa;
 	}

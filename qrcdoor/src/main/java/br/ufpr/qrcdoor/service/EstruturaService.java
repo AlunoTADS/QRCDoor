@@ -131,7 +131,7 @@ public class EstruturaService extends GenericService<Estrutura, Long> {
 	}
 	
 	public Estrutura save(Estrutura estrutura) throws Exception {
-		return this.estruturaRepository.saveAndFlush(this.changePassword(estrutura));
+		return this.estruturaRepository.saveAndFlush(this.changeFoto(this.changePassword(estrutura)));
 	}
 	
 	public Estrutura changePassword(Estrutura estrutura) {
@@ -139,6 +139,14 @@ public class EstruturaService extends GenericService<Estrutura, Long> {
 			estrutura.setSenha(this.estruturaRepository.findOne(estrutura.getId()).getSenha());
 		} else {
 			estrutura.setSenha(passwordEncoder.encode(estrutura.getSenha()));
+		}
+		return estrutura;
+	}
+	
+	public Estrutura changeFoto(Estrutura estrutura) {
+		if (estrutura.getFoto() == null && estrutura.getId() != null) {
+			estrutura.setFoto(this.estruturaRepository.findOne(estrutura.getId()).getFoto());
+			estrutura.setFotoExtensao(this.estruturaRepository.findOne(estrutura.getId()).getFotoExtensao());
 		}
 		return estrutura;
 	}
