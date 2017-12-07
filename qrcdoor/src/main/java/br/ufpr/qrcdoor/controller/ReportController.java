@@ -20,41 +20,38 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@SuppressWarnings("rawtypes")
 @Controller
 public class ReportController {
 
-    @Autowired
-    JdbcTemplate jdbc;
+	@Autowired
+	JdbcTemplate jdbc;
 
-//    http://localhost:8070/report?dataInicial=01/01/2017&dataFinal=01/01/2017&pessoa=0&estrutura=0
-    @GetMapping("/report")
-    public ResponseEntity get(@RequestParam("dataInicial") Date dataInicial, @RequestParam("dataInicial") Date dataFinal, @RequestParam("pessoa") Long idPessoa, @RequestParam("estrutura") Long idEstrutura) throws Exception {
-        Map<String, Object> parameters = new HashMap<>();
+	// http://localhost:8070/report?dataInicial=01/01/2017&dataFinal=01/01/2017&pessoa=0&estrutura=0
+	@GetMapping("/report")
+	public ResponseEntity get(@RequestParam("dataInicial") Date dataInicial,
+			@RequestParam("dataInicial") Date dataFinal, @RequestParam("pessoa") Long idPessoa,
+			@RequestParam("estrutura") Long idEstrutura) throws Exception {
+		Map<String, Object> parameters = new HashMap<>();
 
-        parameters.put("dataInicial", dataInicial);
-        parameters.put("dataFinal", dataFinal);
-        parameters.put("idPessoa", idPessoa);
-        parameters.put("idEstrutura", idEstrutura);
+		parameters.put("dataInicial", dataInicial);
+		parameters.put("dataFinal", dataFinal);
+		parameters.put("idPessoa", idPessoa);
+		parameters.put("idEstrutura", idEstrutura);
 
-        byte[] report = processReport(parameters);
+		byte[] report = processReport(parameters);
 
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .contentType(MediaType.APPLICATION_PDF)
-                .body(report);
-    }
+		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_PDF).body(report);
+	}
 
-    private final byte[] processReport(Map<String, Object> parameters) throws Exception {
-        Connection conn = DataSourceUtils.getConnection(jdbc.getDataSource());
-        JasperPrint jasperPrint = JasperFillManager.fillReport(getTemplate(), null, conn);
-        return JasperExportManager.exportReportToPdf(jasperPrint);
-    }
+	private final byte[] processReport(Map<String, Object> parameters) throws Exception {
+		Connection conn = DataSourceUtils.getConnection(jdbc.getDataSource());
+		JasperPrint jasperPrint = JasperFillManager.fillReport(getTemplate(), null, conn);
+		return JasperExportManager.exportReportToPdf(jasperPrint);
+	}
 
-    private InputStream getTemplate() throws IOException {
-        return ReportController.class
-                .getClassLoader()
-                .getResourceAsStream("report/relatorio_acessos_periodo.jasper");
-
-    }
+	private InputStream getTemplate() throws IOException {
+		return ReportController.class.getClassLoader().getResourceAsStream("report/relatorio_acessos_periodo.jasper");
+	}
 
 }
