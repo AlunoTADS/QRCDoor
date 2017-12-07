@@ -1,5 +1,8 @@
 package br.ufpr.qrcdoor.controller;
 
+import java.io.InputStream;
+
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,8 +45,18 @@ public class PessoaController {
 	@GetMapping("/pessoa/foto/{id}")
 	public ResponseEntity foto(@PathVariable Long id) throws Exception {
 		Pessoa pessoa = this.pessoaService.findOne(id);
-		MediaType mediaType = (pessoa.getFotoExtensao().equals("png")) ? MediaType.IMAGE_PNG : MediaType.IMAGE_JPEG;
-		return ResponseEntity.status(HttpStatus.OK).contentType(mediaType).body(pessoa.getFoto());
+		MediaType mediaType;
+		byte[] foto;
+		if (pessoa.getFoto() != null) {
+			mediaType = (pessoa.getFotoExtensao().equals("png")) ? MediaType.IMAGE_PNG : MediaType.IMAGE_JPEG;
+			foto = pessoa.getFoto();
+		} else {
+			InputStream inputStream = PessoaController.class.getClassLoader().getResourceAsStream("img/profile.png");
+			foto = IOUtils.toByteArray(inputStream);
+			inputStream.close();
+			mediaType = MediaType.IMAGE_PNG;
+		}
+		return ResponseEntity.status(HttpStatus.OK).contentType(mediaType).body(foto);
 	}
 	
 	@PutMapping("/pessoa/foto/{id}")

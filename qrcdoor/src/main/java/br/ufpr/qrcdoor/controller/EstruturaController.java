@@ -2,14 +2,15 @@ package br.ufpr.qrcdoor.controller;
 
 import static br.ufpr.qrcdoor.interceptor.WebSocketSessionCapturingHandlerDecorator.estruturasConectadas;
 
+import java.io.InputStream;
+
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,7 +54,14 @@ public class EstruturaController {
 	@GetMapping("/estrutura/foto/{id}")
 	public ResponseEntity foto(@PathVariable Long id) throws Exception {
 		Estrutura estrutura = this.estruturaService.findOne(id);
-		MediaType mediaType = (estrutura.getFotoExtensao().equals("png")) ? MediaType.IMAGE_PNG : MediaType.IMAGE_JPEG;
+		MediaType mediaType;
+		if (estrutura.getFoto() != null) {
+			mediaType = (estrutura.getFotoExtensao().equals("png")) ? MediaType.IMAGE_PNG : MediaType.IMAGE_JPEG;
+		} else {
+			InputStream foto = EstruturaController.class.getClassLoader().getResourceAsStream("img/lock.png");
+			estrutura.setFoto(IOUtils.toByteArray(foto));
+			mediaType = MediaType.IMAGE_PNG;
+		}
 		return ResponseEntity.status(HttpStatus.OK).contentType(mediaType).body(estrutura.getFoto());
 	}
 	
