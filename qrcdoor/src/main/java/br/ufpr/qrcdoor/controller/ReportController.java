@@ -6,9 +6,6 @@ import java.sql.Connection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,12 +13,16 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceUtils;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 
 @SuppressWarnings("rawtypes")
-@Controller
+@RestController
 public class ReportController {
 
 	@Autowired
@@ -46,7 +47,7 @@ public class ReportController {
 
 	private final byte[] processReport(Map<String, Object> parameters) throws Exception {
 		Connection conn = DataSourceUtils.getConnection(jdbc.getDataSource());
-		JasperPrint jasperPrint = JasperFillManager.fillReport(getTemplate(), null, conn);
+		JasperPrint jasperPrint = JasperFillManager.fillReport(getTemplate(), parameters, conn);
 		return JasperExportManager.exportReportToPdf(jasperPrint);
 	}
 

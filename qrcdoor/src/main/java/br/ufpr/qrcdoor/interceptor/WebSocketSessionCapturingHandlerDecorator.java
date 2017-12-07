@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,14 +17,30 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.WebSocketHandlerDecorator;
 
 import br.ufpr.qrcdoor.crypt.Rsa;
+import br.ufpr.qrcdoor.entity.Acesso;
 import br.ufpr.qrcdoor.entity.Chave;
 import br.ufpr.qrcdoor.entity.Estrutura;
+import br.ufpr.qrcdoor.entity.FuncaoPessoa;
+import br.ufpr.qrcdoor.entity.PermissaoEstrutura;
+import br.ufpr.qrcdoor.entity.PermissaoEstrutura.PermissaoEstruturaPK;
+import br.ufpr.qrcdoor.entity.PermissaoFuncao;
+import br.ufpr.qrcdoor.entity.PermissaoPessoa;
+import br.ufpr.qrcdoor.repository.AcessoRepository;
+import br.ufpr.qrcdoor.repository.ChaveRepository;
+import br.ufpr.qrcdoor.repository.FuncaoPessoaRepository;
+import br.ufpr.qrcdoor.repository.PermissaoFuncaoRepository;
+import br.ufpr.qrcdoor.repository.PermissaoPessoaRepository;
 import br.ufpr.qrcdoor.service.EstruturaService;
+import br.ufpr.qrcdoor.service.PermissaoEstruturaService;
 
 public class WebSocketSessionCapturingHandlerDecorator extends WebSocketHandlerDecorator {
 
 	@Autowired
 	private EstruturaService estruturaService;
+	@Autowired
+	private ChaveRepository chaveRepository;
+	@Autowired
+	private AcessoRepository acessoRepository;
 	
 	private static final Logger logger = LoggerFactory.getLogger(WebSocketSessionCapturingHandlerDecorator.class);
 	public static HashMap<String, WebSocketSession> estruturasConectadas = new HashMap<String, WebSocketSession>();
@@ -91,6 +108,12 @@ public class WebSocketSessionCapturingHandlerDecorator extends WebSocketHandlerD
 			estrutura.setId(Long.valueOf(session.getPrincipal().getName()));
 			if (this.estruturaService.hasPermission(chave, estrutura)) {
 				session.sendMessage(new TextMessage("OPEN"));
+				Acesso acesso = new Acesso();
+				acesso.setChave(chave);
+				acesso.setDataHoraAbertura(new Date());
+				acesso.setEstrutura(estrutura);
+				acesso.setPessoa(this.chaveRepository.findOne(chave.getId()).getPessoa());
+				this.acessoRepository.save(acesso);
 			} else {
 				session.sendMessage(new TextMessage("ERROR"));
 			}
