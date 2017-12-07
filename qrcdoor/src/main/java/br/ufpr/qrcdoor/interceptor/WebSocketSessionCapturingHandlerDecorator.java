@@ -113,7 +113,7 @@ public class WebSocketSessionCapturingHandlerDecorator extends WebSocketHandlerD
 				acesso.setDataHoraAbertura(new Date());
 				acesso.setEstrutura(estrutura);
 				acesso.setPessoa(this.chaveRepository.findOne(chave.getId()).getPessoa());
-				this.acessoRepository.save(acesso);
+				this.acessoRepository.save(acesso)
 			} else {
 				session.sendMessage(new TextMessage("ERROR"));
 			}
