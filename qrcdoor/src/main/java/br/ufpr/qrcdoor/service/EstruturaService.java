@@ -37,7 +37,7 @@ public class EstruturaService extends GenericService<Estrutura, Long> {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("now", new Date());
 		parameters.put("idchave", chave.getId());
-		parameters.put("assinatura", chave.getAssinatura());
+		parameters.put("assinatura", chave.getAssinatura() + "%");
 		parameters.put("idestrutura", estrutura.getId());
 		
 		String sql = "SELECT 1 "
@@ -49,7 +49,7 @@ public class EstruturaService extends GenericService<Estrutura, Long> {
 				+"	INNER JOIN PERMISSAOESTRUTURA PE ON PE.IDPERMISSAO = PPP.IDPERMISSAO "
 				+"WHERE "
 				+"	C.IDCHAVE = :idchave "
-				+"	AND C.ASSINATURA = :assinatura"
+				+"	AND C.ASSINATURA LIKE :assinatura"
 				+"	AND PE.IDESTRUTURA = :idestrutura "
 				+"	AND PPP.ABRE = 'T' "
 				+"	AND CURRENT_DATE BETWEEN COALESCE(PPP.DATAINICIO, CURRENT_DATE) AND COALESCE(PPP.DATAFIM, CURRENT_DATE) "
@@ -67,7 +67,7 @@ public class EstruturaService extends GenericService<Estrutura, Long> {
 				+"	INNER JOIN PERMISSAOESTRUTURA PE ON PE.IDPERMISSAO = PPP.IDPERMISSAO "
 				+"WHERE "
 				+"	C.IDCHAVE = :idchave "
-				+"	AND C.ASSINATURA = :assinatura"
+				+"	AND C.ASSINATURA LIKE :assinatura"
 				+"	AND PE.IDESTRUTURA = :idestrutura "
 				+"	AND PPP.ABRE = 'T' "
 				+"	AND CURRENT_DATE BETWEEN COALESCE(PPP.DATAINICIO, CURRENT_DATE) AND COALESCE(PPP.DATAFIM, CURRENT_DATE) "

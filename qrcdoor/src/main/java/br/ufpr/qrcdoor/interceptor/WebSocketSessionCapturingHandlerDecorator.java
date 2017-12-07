@@ -1,17 +1,30 @@
 package br.ufpr.qrcdoor.interceptor;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.WebSocketHandlerDecorator;
 
+import br.ufpr.qrcdoor.crypt.Rsa;
+import br.ufpr.qrcdoor.entity.Chave;
+import br.ufpr.qrcdoor.entity.Estrutura;
+import br.ufpr.qrcdoor.service.EstruturaService;
+
 public class WebSocketSessionCapturingHandlerDecorator extends WebSocketHandlerDecorator {
 
+	@Autowired
+	private EstruturaService estruturaService;
+	
 	private static final Logger logger = LoggerFactory.getLogger(WebSocketSessionCapturingHandlerDecorator.class);
 	public static HashMap<String, WebSocketSession> estruturasConectadas = new HashMap<String, WebSocketSession>();
 
@@ -36,6 +49,56 @@ public class WebSocketSessionCapturingHandlerDecorator extends WebSocketHandlerD
 	@Override
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
 		logger.info("handleMessage");
+		try {
+			
+			// TextMessage msg = new TextMessage("Hello, " +
+			// message.getPayload() + "!");
+			Rsa rsa = new Rsa();
+			BigInteger decrypt = rsa.decrypt(new BigInteger(((TextMessage)message).getPayload()
+					.split("[:]")[1].trim(), 16));
+
+			String[] accessData = new String(decrypt.toByteArray()).split("[.]");
+
+			String c = accessData[0];
+			String p = accessData[1];
+			String s = accessData[2];
+			String t = accessData[3];
+			String h = accessData[4];
+			String cspth = "#" + c + "." + p + "." + s + "." + t + "#";
+
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			String hash = new BigInteger(1, md.digest(cspth.getBytes())).toString(16);
+
+			// Verifica se mensagem não foi adulterada
+			if (!hash.substring(0, 4).equals(h)) {
+				session.sendMessage(new TextMessage("ERROR"));
+				return;
+			}
+
+			long date = new BigInteger(t, 16).multiply(BigInteger.valueOf(1000L)).longValue();
+			long now = new Date().getTime();
+			long tolerance = 5L * 60L * 1000L; // 5 minutes
+			if (!(now - tolerance < date && date < now + tolerance)) {
+				session.sendMessage(new TextMessage("ERROR"));
+				return;
+			}
+
+			Chave chave = new Chave();
+			chave.setId(Long.valueOf(c));
+			chave.setAssinatura(s);
+
+			Estrutura estrutura = new Estrutura();
+			estrutura.setId(Long.valueOf(session.getPrincipal().getName()));
+			if (this.estruturaService.hasPermission(chave, estrutura)) {
+				session.sendMessage(new TextMessage("OPEN"));
+			} else {
+				session.sendMessage(new TextMessage("ERROR"));
+			}
+
+		} catch (Exception e) {
+			session.sendMessage(new TextMessage("ERROR"));
+		}
+		
 		super.handleMessage(session, message);
 	}
 
