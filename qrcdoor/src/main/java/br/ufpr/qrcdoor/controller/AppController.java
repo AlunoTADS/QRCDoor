@@ -62,7 +62,7 @@ public class AppController {
 		}
 		throw new AcessoUnauthorizedException();
 	}
-
+	
 	@GetMapping("/app/list")
 	public List<Estrutura> list(Pageable pageable) throws Exception {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
