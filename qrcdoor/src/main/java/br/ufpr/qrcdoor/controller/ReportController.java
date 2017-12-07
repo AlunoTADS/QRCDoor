@@ -16,18 +16,19 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class ReportController {
 
     @Autowired
     JdbcTemplate jdbc;
 
+//    http://localhost:8070/report?dataInicial=01/01/2017&dataFinal=01/01/2017&pessoa=0&estrutura=0
     @GetMapping("/report")
-    public ResponseEntity foto(@RequestParam("dataInicial") Date dataInicial, @RequestParam("dataInicial") Date dataFinal, @RequestParam("pessoa") Long idPessoa, @RequestParam("estrutura") Long idEstrutura) throws Exception {
+    public ResponseEntity get(@RequestParam("dataInicial") Date dataInicial, @RequestParam("dataInicial") Date dataFinal, @RequestParam("pessoa") Long idPessoa, @RequestParam("estrutura") Long idEstrutura) throws Exception {
         Map<String, Object> parameters = new HashMap<>();
 
         parameters.put("dataInicial", dataInicial);
