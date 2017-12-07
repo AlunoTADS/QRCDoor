@@ -1,9 +1,14 @@
 package br.ufpr.qrcdoor.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,8 +25,6 @@ public class ReportController {
 
     @Autowired
     JdbcTemplate jdbc;
-
-    private Connection conn = DataSourceUtils.getConnection(jdbc.getDataSource());
 
     @GetMapping("/report")
     public ResponseEntity foto(@RequestParam("dataInicial") Date dataInicial, @RequestParam("dataInicial") Date dataFinal, @RequestParam("pessoa") Long idPessoa, @RequestParam("estrutura") Long idEstrutura) throws Exception {
@@ -41,22 +44,15 @@ public class ReportController {
     }
 
     private final byte[] processReport(Map<String, Object> parameters) throws Exception {
-        final Report report = new Report();
-        byte[] data = null;
-        return null;
+        Connection conn = DataSourceUtils.getConnection(jdbc.getDataSource());
+        JasperPrint jasperPrint = JasperFillManager.fillReport(getTemplate(), null, conn);
+        return JasperExportManager.exportReportToPdf(jasperPrint);
     }
 
-    private class Report {
-
-        private byte[] data;
-
-        public byte[] getData() {
-            return data;
-        }
-
-        public void setData(byte[] data) {
-            this.data = data;
-        }
+    private InputStream getTemplate() throws IOException {
+        return ReportController.class
+                .getClassLoader()
+                .getResourceAsStream("report/relatorio_acessos_periodo.jasper");
 
     }
 
