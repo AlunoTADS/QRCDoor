@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorio_acessos_periodo" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d5dfb1dc-8e59-4217-b969-684d627b8bb2">
-	<property name="ireport.zoom" value="1.4641000000000024"/>
+	<property name="ireport.zoom" value="1.6105100000000032"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="288"/>
+	<property name="ireport.y" value="41"/>
 	<parameter name="dataInicial" class="java.util.Date"/>
 	<parameter name="dataFinal" class="java.util.Date"/>
-	<parameter name="idEstrutura" class="java.lang.Long"/>
-	<parameter name="idPessoa" class="java.lang.Long"/>
 	<queryString>
 		<![CDATA[SELECT
   a.datahoraabertura,
@@ -22,8 +20,6 @@ FROM
   left join permissao pm ON pm.idpermissao = a.idpermissao
 WHERE
   a.datahoraabertura BETWEEN $P{dataInicial} AND $P{dataFinal}
-  AND ($P{idEstrutura} is null OR a.idestrutura = $P{idEstrutura})
-  AND ($P{idPessoa} is null OR a.idpessoa = $P{idPessoa})
 ORDER BY
   datahoraabertura]]>
 	</queryString>
@@ -37,55 +33,43 @@ ORDER BY
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="40" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="459" height="79" uuid="07926754-7022-459f-80f3-793283ba2528"/>
+				<reportElement x="0" y="0" width="555" height="37" uuid="07926754-7022-459f-80f3-793283ba2528"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Relatório de Acessos]]></text>
 			</staticText>
-			<image>
-				<reportElement x="459" y="0" width="96" height="79" uuid="c239fc97-bc5e-44e4-8652-1641aaf8486c"/>
-				<imageExpression><![CDATA["logo.png"]]></imageExpression>
-			</image>
 		</band>
 	</title>
 	<pageHeader>
 		<band height="35" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="20" splitType="Stretch">
-			<staticText>
-				<reportElement x="420" y="0" width="135" height="20" uuid="e87e86ce-4985-43d6-b152-1ffb30985769"/>
-				<text><![CDATA[Permissão]]></text>
-			</staticText>
+		<band height="25" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="100" height="20" uuid="b9e58765-cc2c-42d7-909a-624cdb37349a"/>
 				<text><![CDATA[Data / Hora Abertura]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="260" y="0" width="160" height="20" uuid="635eed9c-b511-449c-ba90-3439cae8fd36"/>
+				<reportElement x="325" y="0" width="230" height="20" uuid="635eed9c-b511-449c-ba90-3439cae8fd36"/>
 				<text><![CDATA[Estrutura]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="100" y="0" width="160" height="20" uuid="8d0004c0-d515-4351-bf1a-2a4a74a57b53"/>
+				<reportElement x="100" y="0" width="225" height="20" uuid="8d0004c0-d515-4351-bf1a-2a4a74a57b53"/>
 				<text><![CDATA[Pessoa]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Stretch">
+		<band height="22" splitType="Stretch">
 			<textField>
-				<reportElement x="420" y="0" width="135" height="20" uuid="69c8bccb-ac75-4a96-9ed0-3b5fe23e6e1e"/>
-				<textFieldExpression><![CDATA[$F{permissao}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="260" y="0" width="160" height="20" uuid="e217fa6d-53d4-4452-b969-9a5b87b68d31"/>
+				<reportElement x="325" y="0" width="230" height="20" uuid="e217fa6d-53d4-4452-b969-9a5b87b68d31"/>
 				<textFieldExpression><![CDATA[$F{estrutura}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="100" y="0" width="160" height="20" uuid="ed570d3a-e012-4266-b35b-5a999c8396c8"/>
+				<reportElement x="100" y="0" width="225" height="20" uuid="ed570d3a-e012-4266-b35b-5a999c8396c8"/>
 				<textFieldExpression><![CDATA[$F{pessoa}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -98,60 +82,20 @@ ORDER BY
 		<band height="44" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="0" width="555" height="30" uuid="8fa43850-eb37-4e46-a4d2-bec32c5f3047"/>
-				<textElement textAlignment="Right">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[QRC Door]]></text>
-			</staticText>
-		</band>
+		<band height="54" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="800" splitType="Stretch">
-			<pieChart>
-				<chart>
-					<reportElement x="0" y="30" width="555" height="200" uuid="e1cc5674-aa83-4221-82f2-ccbb9965fb53"/>
-					<chartTitle/>
-					<chartSubtitle/>
-					<chartLegend/>
-				</chart>
-				<pieDataset>
-					<keyExpression><![CDATA[$F{pessoa}]]></keyExpression>
-					<valueExpression><![CDATA[$F{cnt}]]></valueExpression>
-				</pieDataset>
-				<piePlot>
-					<plot/>
-					<itemLabel/>
-				</piePlot>
-			</pieChart>
-			<pieChart>
-				<chart>
-					<reportElement x="0" y="290" width="555" height="200" uuid="c1e9fada-111e-4c23-88db-ac3079bca51e"/>
-					<chartTitle/>
-					<chartSubtitle/>
-					<chartLegend/>
-				</chart>
-				<pieDataset>
-					<keyExpression><![CDATA[$F{estrutura}]]></keyExpression>
-					<valueExpression><![CDATA[$F{cnt}]]></valueExpression>
-				</pieDataset>
-				<piePlot>
-					<plot/>
-					<itemLabel/>
-				</piePlot>
-			</pieChart>
+		<band height="173" splitType="Stretch">
 			<barChart>
 				<chart>
-					<reportElement x="0" y="550" width="555" height="250" uuid="37dc409b-cff1-4aa7-aacb-13a49dc30c54"/>
+					<reportElement x="0" y="0" width="555" height="173" uuid="60ffb9d8-e8ef-41a1-8062-18fdd9b5e53e"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
 				<categoryDataset>
 					<categorySeries>
-						<seriesExpression><![CDATA["Acessos"]]></seriesExpression>
+						<seriesExpression><![CDATA["Dummy Series"]]></seriesExpression>
 						<categoryExpression><![CDATA[$F{horario}]]></categoryExpression>
 						<valueExpression><![CDATA[$F{cnt}]]></valueExpression>
 					</categorySeries>
@@ -167,27 +111,6 @@ ORDER BY
 					</valueAxisFormat>
 				</barPlot>
 			</barChart>
-			<staticText>
-				<reportElement x="0" y="0" width="555" height="30" uuid="53898069-37f3-4516-8006-cf86330d3ef1"/>
-				<textElement textAlignment="Center">
-					<font size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Acessos por Pessoas]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="520" width="555" height="30" uuid="1aca8cf5-625b-43a6-afe9-b811abac33f8"/>
-				<textElement textAlignment="Center">
-					<font size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Acessos por Horário]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="260" width="555" height="30" uuid="346293ce-fefe-49f3-8f9b-8ac53bdc2304"/>
-				<textElement textAlignment="Center">
-					<font size="10" isBold="false" isItalic="true"/>
-				</textElement>
-				<text><![CDATA[Acessos por Estrutura]]></text>
-			</staticText>
 		</band>
 	</summary>
 </jasperReport>

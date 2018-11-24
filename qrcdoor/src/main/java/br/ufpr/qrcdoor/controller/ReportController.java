@@ -30,15 +30,11 @@ public class ReportController {
 
 	// http://localhost:8070/report?dataInicial=01/01/2017&dataFinal=01/01/2017&pessoa=0&estrutura=0
 	@GetMapping("/report")
-	public ResponseEntity get(@RequestParam("dataInicial") Date dataInicial,
-			@RequestParam("dataInicial") Date dataFinal, @RequestParam("pessoa") Long idPessoa,
-			@RequestParam("estrutura") Long idEstrutura) throws Exception {
+	public ResponseEntity get(@RequestParam("dataInicial") Date dataInicial, @RequestParam("dataInicial") Date dataFinal) throws Exception {
 		Map<String, Object> parameters = new HashMap<>();
 
 		parameters.put("dataInicial", dataInicial);
 		parameters.put("dataFinal", dataFinal);
-		parameters.put("idPessoa", idPessoa);
-		parameters.put("idEstrutura", idEstrutura);
 
 		byte[] report = processReport(parameters);
 
